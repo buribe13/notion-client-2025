@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { Sidebar } from "@/components/Sidebar";
 import { ProjectModal } from "@/components/ProjectModal";
 import { useDashboardStore } from "@/lib/store";
@@ -14,17 +16,18 @@ import {
   Plus,
   ChevronDown,
   CheckSquare,
-  List,
   BarChart3,
+  List,
   Grid3X3,
   Rss,
   Calendar,
   Circle,
   Clock,
   CheckCircle,
+  TrendingUp,
 } from "lucide-react";
 
-export default function DashboardPage() {
+export default function Dashboard() {
   const {
     getFilteredProjects,
     isModalOpen,
@@ -32,6 +35,8 @@ export default function DashboardPage() {
     setIsModalOpen,
     setSelectedProject,
   } = useDashboardStore();
+
+  const [activeTab, setActiveTab] = useState("Project Board");
 
   const projects = getFilteredProjects();
 
@@ -50,180 +55,10 @@ export default function DashboardPage() {
   const inProgressProjects = projects.filter((p) => p.status === "In Progress");
   const completeProjects = projects.filter((p) => p.status === "Completed");
 
-  const getClientTypeColor = (clientType: string) => {
-    switch (clientType) {
-      case "Acme Corp":
-        return "#E03D3E"; // Notion Red Regular
-      case "TechStart":
-        return "#DFAB00"; // Notion Yellow Regular
-      case "Sarah Johnson":
-        return "#FBF3DA"; // Notion Yellow Light
-      case "Regular Client":
-        return "#E03D3E"; // Notion Red Regular
-      case "International":
-        return "#DFAB00"; // Notion Yellow Regular
-      case "New Client":
-        return "#FBF3DA"; // Notion Yellow Light
-      case "Individual":
-        return "#E03D3E"; // Notion Red Regular
-      case "Startup":
-        return "#DFAB00"; // Notion Yellow Regular
-      case "Enterprise":
-        return "#FBF3DA"; // Notion Yellow Light
-      case "Non-profit":
-        return "#E03D3E"; // Notion Red Regular
-      default:
-        return "#878682"; // Notion Gray Regular
-    }
-  };
-
-  return (
-    <div className="flex h-screen" style={{ backgroundColor: "#181818" }}>
-      <Sidebar />
-
-      <div className="flex-1 flex flex-col lg:ml-0">
-        {/* Top Bar */}
-        <div className="px-3 py-1" style={{ backgroundColor: "#181818" }}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">
-              <span
-                className="text-xs lg:text-sm truncate"
-                style={{ color: "#86837E" }}
-              >
-                dashboard / breadcrumb...
-              </span>
-              <span className="hidden lg:inline" style={{ color: "#86837E" }}>
-                /
-              </span>
-              <span
-                className="text-xs lg:text-sm truncate"
-                style={{ color: "#e5e5e5" }}
-              >
-                Freelance Projects
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2 lg:gap-4 flex-shrink-0">
-              <span
-                className="text-xs lg:text-sm hidden sm:inline"
-                style={{ color: "#86837E" }}
-              >
-                Edited just now
-              </span>
-              <button
-                className="flex items-center gap-1 lg:gap-2 px-2 lg:px-3 py-1 hover:opacity-80"
-                style={{ color: "#86837E" }}
-              >
-                <Share className="w-3 h-3 lg:w-4 lg:h-4" />
-                <span className="hidden lg:inline text-sm">Share</span>
-              </button>
-              <button className="hover:opacity-80" style={{ color: "#86837E" }}>
-                <Star className="w-3 h-3 lg:w-4 lg:h-4" />
-              </button>
-              <button className="hover:opacity-80" style={{ color: "#86837E" }}>
-                <MoreHorizontal className="w-3 h-3 lg:w-4 lg:h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Page Title */}
-        <div className="px-24 pt-12 pb-2">
-          <div className="flex items-center gap-3 mb-2">
-            <CheckSquare className="w-6 h-6" style={{ color: "#e5e5e5" }} />
-            <h1 className="text-2xl font-semibold" style={{ color: "#e5e5e5" }}>
-              Freelance Projects
-            </h1>
-          </div>
-
-          {/* Sub-menu Tabs */}
-          <div className="flex items-center gap-1 mb-2">
-            <button
-              className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5]"
-              style={{ borderRadius: "50px" }}
-            >
-              <BarChart3 className="w-4 h-4" />
-              <span className="text-sm">Project Board</span>
-            </button>
-            <button
-              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
-              style={{ borderRadius: "50px" }}
-            >
-              <List className="w-4 h-4" style={{ color: "#86837E" }} />
-              <span className="text-sm" style={{ color: "#86837E" }}>
-                All Projects
-              </span>
-            </button>
-            <button
-              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
-              style={{ borderRadius: "50px" }}
-            >
-              <BarChart3 className="w-4 h-4" style={{ color: "#86837E" }} />
-              <span className="text-sm" style={{ color: "#86837E" }}>
-                Chart
-              </span>
-            </button>
-            <button
-              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
-              style={{ borderRadius: "50px" }}
-            >
-              <Grid3X3 className="w-4 h-4" style={{ color: "#86837E" }} />
-              <span className="text-sm" style={{ color: "#86837E" }}>
-                Client Progress View
-              </span>
-            </button>
-            <button
-              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
-              style={{ borderRadius: "50px" }}
-            >
-              <Rss className="w-4 h-4" style={{ color: "#86837E" }} />
-              <span className="text-sm" style={{ color: "#86837E" }}>
-                Feed
-              </span>
-            </button>
-            <button
-              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
-              style={{ borderRadius: "50px" }}
-            >
-              <Calendar className="w-4 h-4" style={{ color: "#86837E" }} />
-              <span className="text-sm" style={{ color: "#86837E" }}>
-                Timeline
-              </span>
-            </button>
-
-            <div className="flex items-center gap-2 ml-auto">
-              <button
-                className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
-                style={{ borderRadius: "50px" }}
-              >
-                <Filter className="w-4 h-4" style={{ color: "#86837E" }} />
-              </button>
-              <button
-                className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
-                style={{ borderRadius: "50px" }}
-              >
-                <ArrowUpDown className="w-4 h-4" style={{ color: "#86837E" }} />
-              </button>
-              <button
-                className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
-                style={{ borderRadius: "50px" }}
-              >
-                <Search className="w-4 h-4" style={{ color: "#86837E" }} />
-              </button>
-              <button
-                className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors"
-                style={{ borderRadius: "50px" }}
-              >
-                <Plus className="w-4 h-4" />
-                <span className="text-sm">New</span>
-                <ChevronDown className="w-3 h-3" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Kanban Board */}
-        <div className="flex-1 px-24 pb-8 overflow-x-auto">
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "Project Board":
+        return (
           <div className="flex gap-4 h-full">
             {/* To-do Column */}
             <div className="w-[300px] flex-shrink-0">
@@ -274,7 +109,11 @@ export default function DashboardPage() {
                         <div className="text-xs" style={{ color: "#86837E" }}>
                           {new Date(project.deadline).toLocaleDateString(
                             "en-US",
-                            { month: "long", day: "numeric", year: "numeric" }
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
                           )}
                         </div>
                       </div>
@@ -342,7 +181,11 @@ export default function DashboardPage() {
                         <div className="text-xs" style={{ color: "#86837E" }}>
                           {new Date(project.deadline).toLocaleDateString(
                             "en-US",
-                            { month: "long", day: "numeric", year: "numeric" }
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
                           )}
                         </div>
                       </div>
@@ -413,7 +256,11 @@ export default function DashboardPage() {
                         <div className="text-xs" style={{ color: "#86837E" }}>
                           {new Date(project.deadline).toLocaleDateString(
                             "en-US",
-                            { month: "long", day: "numeric", year: "numeric" }
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
                           )}
                         </div>
                       </div>
@@ -429,6 +276,263 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
+        );
+      case "All Projects":
+        return (
+          <div className="p-6">
+            <h2
+              className="text-xl font-semibold mb-4"
+              style={{ color: "#e5e5e5" }}
+            >
+              All Projects
+            </h2>
+            <p className="text-sm" style={{ color: "#86837E" }}>
+              View and manage all your freelance projects in a comprehensive
+              list.
+            </p>
+          </div>
+        );
+      case "Chart":
+        return (
+          <div className="p-6">
+            <h2
+              className="text-xl font-semibold mb-4"
+              style={{ color: "#e5e5e5" }}
+            >
+              Project Analytics
+            </h2>
+            <p className="text-sm" style={{ color: "#86837E" }}>
+              Visualize your project progress, time tracking, and client
+              analytics.
+            </p>
+          </div>
+        );
+      case "Client Progress View":
+        return (
+          <div className="p-6">
+            <h2
+              className="text-xl font-semibold mb-4"
+              style={{ color: "#e5e5e5" }}
+            >
+              Client Progress
+            </h2>
+            <p className="text-sm" style={{ color: "#86837E" }}>
+              Track progress across all projects for each client.
+            </p>
+          </div>
+        );
+      case "Feed":
+        return (
+          <div className="p-6">
+            <h2
+              className="text-xl font-semibold mb-4"
+              style={{ color: "#e5e5e5" }}
+            >
+              Activity Feed
+            </h2>
+            <p className="text-sm" style={{ color: "#86837E" }}>
+              Stay updated with recent project activities and milestones.
+            </p>
+          </div>
+        );
+      case "Timeline":
+        return (
+          <div className="p-6">
+            <h2
+              className="text-xl font-semibold mb-4"
+              style={{ color: "#e5e5e5" }}
+            >
+              Project Timeline
+            </h2>
+            <p className="text-sm" style={{ color: "#86837E" }}>
+              View your projects in a chronological timeline view.
+            </p>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const getClientTypeColor = (clientType: string) => {
+    switch (clientType) {
+      case "Acme Corp":
+        return "#E03D3E"; // Notion Red Regular
+      case "TechStart":
+        return "#DFAB00"; // Notion Yellow Regular
+      case "Sarah Johnson":
+        return "#FBF3DA"; // Notion Yellow Light
+      case "Regular Client":
+        return "#E03D3E"; // Notion Red Regular
+      case "International":
+        return "#DFAB00"; // Notion Yellow Regular
+      case "New Client":
+        return "#FBF3DA"; // Notion Yellow Light
+      case "Individual":
+        return "#E03D3E"; // Notion Red Regular
+      case "Startup":
+        return "#DFAB00"; // Notion Yellow Regular
+      case "Enterprise":
+        return "#FBF3DA"; // Notion Yellow Light
+      case "Non-profit":
+        return "#E03D3E"; // Notion Red Regular
+      default:
+        return "#878682"; // Notion Gray Regular
+    }
+  };
+
+  return (
+    <div className="flex h-screen" style={{ backgroundColor: "#181818" }}>
+      <Sidebar />
+
+      <div className="flex-1 flex flex-col lg:ml-0">
+        {/* Top Bar (Breadcrumb) */}
+        <div className="px-3 py-1" style={{ backgroundColor: "#181818" }}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-xs lg:text-sm" style={{ color: "#86837E" }}>
+                dashboard / breadcrumb / Freelance Projects
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors">
+                <Star className="w-4 h-4" style={{ color: "#86837E" }} />
+              </button>
+              <button className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors">
+                <MoreHorizontal
+                  className="w-4 h-4"
+                  style={{ color: "#86837E" }}
+                />
+              </button>
+              <button className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors">
+                <Share className="w-4 h-4" />
+                <span className="text-sm">Share</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Page Title */}
+        <div className="px-24 pt-12 pb-2">
+          <div className="flex items-center gap-3 mb-2">
+            <CheckSquare className="w-6 h-6" style={{ color: "#e5e5e5" }} />
+            <h1 className="text-2xl font-semibold" style={{ color: "#e5e5e5" }}>
+              Freelance Projects
+            </h1>
+          </div>
+
+          {/* Sub-menu Tabs */}
+          <div className="flex items-center gap-1 mb-2">
+            <button
+              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
+                activeTab === "Project Board"
+                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
+                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
+              }`}
+              style={{ borderRadius: "50px" }}
+              onClick={() => setActiveTab("Project Board")}
+            >
+              <BarChart3 className="w-4 h-4" />
+              <span className="text-sm">Project Board</span>
+            </button>
+            <button
+              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
+                activeTab === "All Projects"
+                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
+                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
+              }`}
+              style={{ borderRadius: "50px" }}
+              onClick={() => setActiveTab("All Projects")}
+            >
+              <List className="w-4 h-4" />
+              <span className="text-sm">All Projects</span>
+            </button>
+            <button
+              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
+                activeTab === "Chart"
+                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
+                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
+              }`}
+              style={{ borderRadius: "50px" }}
+              onClick={() => setActiveTab("Chart")}
+            >
+              <BarChart3 className="w-4 h-4" />
+              <span className="text-sm">Chart</span>
+            </button>
+            <button
+              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
+                activeTab === "Client Progress View"
+                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
+                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
+              }`}
+              style={{ borderRadius: "50px" }}
+              onClick={() => setActiveTab("Client Progress View")}
+            >
+              <Grid3X3 className="w-4 h-4" />
+              <span className="text-sm">Client Progress View</span>
+            </button>
+            <button
+              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
+                activeTab === "Feed"
+                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
+                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
+              }`}
+              style={{ borderRadius: "50px" }}
+              onClick={() => setActiveTab("Feed")}
+            >
+              <Rss className="w-4 h-4" />
+              <span className="text-sm">Feed</span>
+            </button>
+            <button
+              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
+                activeTab === "Timeline"
+                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
+                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
+              }`}
+              style={{ borderRadius: "50px" }}
+              onClick={() => setActiveTab("Timeline")}
+            >
+              <Calendar className="w-4 h-4" />
+              <span className="text-sm">Timeline</span>
+            </button>
+
+            <div className="flex items-center gap-2 ml-auto">
+              <button
+                className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors"
+                style={{ borderRadius: "50px" }}
+              >
+                <Filter className="w-4 h-4" />
+                <span className="text-sm">Filter</span>
+              </button>
+              <button
+                className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors"
+                style={{ borderRadius: "50px" }}
+              >
+                <ArrowUpDown className="w-4 h-4" />
+                <span className="text-sm">Sort</span>
+              </button>
+              <button
+                className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
+                style={{ borderRadius: "50px" }}
+              >
+                <Search className="w-4 h-4" style={{ color: "#86837E" }} />
+              </button>
+              <button
+                className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors"
+                style={{ borderRadius: "50px" }}
+                onClick={handleAddProject}
+              >
+                <Plus className="w-4 h-4" />
+                <span className="text-sm">New</span>
+                <ChevronDown className="w-3 h-3" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className="flex-1 px-24 pb-8 overflow-x-auto">
+          {renderTabContent()}
         </div>
 
         {/* Modal */}
