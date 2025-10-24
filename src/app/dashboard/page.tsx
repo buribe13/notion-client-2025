@@ -279,7 +279,7 @@ export default function Dashboard() {
         );
       case "All Projects":
         return (
-          <div>
+          <div className="px-24 pb-8">
             <div className="overflow-hidden">
               {/* Table Header */}
               <div className="px-4 py-3 border-b border-[#3d3d3d]">
@@ -428,7 +428,7 @@ export default function Dashboard() {
         );
       case "Chart":
         return (
-          <div className="p-6">
+          <div className="px-24 pb-8">
             <h2
               className="text-xl font-semibold mb-4"
               style={{ color: "#e5e5e5" }}
@@ -443,21 +443,92 @@ export default function Dashboard() {
         );
       case "Client Progress View":
         return (
-          <div className="p-6">
-            <h2
-              className="text-xl font-semibold mb-4"
-              style={{ color: "#e5e5e5" }}
-            >
-              Client Progress
-            </h2>
-            <p className="text-sm" style={{ color: "#86837E" }}>
-              Track progress across all projects for each client.
-            </p>
+          <div className="px-24 pb-8">
+            <div className="grid grid-cols-3 gap-4">
+              {projects.map((project) => (
+                <motion.div
+                  key={project.id}
+                  className="p-4 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors cursor-pointer"
+                  style={{ borderRadius: "12px" }}
+                  whileHover={{ opacity: 0.8 }}
+                  whileTap={{ opacity: 0.9 }}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <CheckSquare
+                      className="w-5 h-5"
+                      style={{ color: "#e5e5e5" }}
+                    />
+                  </div>
+
+                  <h3
+                    className="text-sm font-medium mb-3"
+                    style={{ color: "#e5e5e5" }}
+                  >
+                    {project.name}
+                  </h3>
+
+                  <div className="mb-3">
+                    <span
+                      className={`px-2 py-1 text-xs flex items-center gap-1 w-fit`}
+                      style={{
+                        backgroundColor:
+                          project.status === "Completed"
+                            ? "#10b981"
+                            : project.status === "In Progress"
+                            ? "#3b82f6"
+                            : project.status === "Review"
+                            ? "#f59e0b"
+                            : project.status === "On Hold"
+                            ? "#ef4444"
+                            : "#6b7280",
+                        borderRadius: "4px",
+                        color: "white",
+                      }}
+                    >
+                      <div
+                        className="w-2 h-2 rounded-full"
+                        style={{
+                          backgroundColor: "white",
+                        }}
+                      />
+                      {project.status}
+                    </span>
+                  </div>
+
+                  <div className="text-xs mb-2" style={{ color: "#86837E" }}>
+                    {Math.floor(Math.random() * 10000) + 1000}%
+                  </div>
+
+                  <div className="text-xs" style={{ color: "#86837E" }}>
+                    {new Date(project.deadline).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* Add New Item Card */}
+              <motion.div
+                className="p-4 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors cursor-pointer border-2 border-dashed border-[#3d3d3d]"
+                style={{ borderRadius: "12px" }}
+                whileHover={{ opacity: 0.8 }}
+                whileTap={{ opacity: 0.9 }}
+              >
+                <div className="flex flex-col items-center justify-center h-full min-h-[120px]">
+                  <Plus className="w-6 h-6 mb-2" style={{ color: "#86837E" }} />
+                  <span className="text-sm" style={{ color: "#86837E" }}>
+                    New item
+                  </span>
+                </div>
+              </motion.div>
+            </div>
           </div>
         );
       case "Feed":
         return (
-          <div className="p-6">
+          <div className="px-24 pb-8">
             <h2
               className="text-xl font-semibold mb-4"
               style={{ color: "#e5e5e5" }}
@@ -471,7 +542,7 @@ export default function Dashboard() {
         );
       case "Timeline":
         return (
-          <div className="p-6">
+          <div className="px-24 pb-8">
             <h2
               className="text-xl font-semibold mb-4"
               style={{ color: "#e5e5e5" }}
@@ -660,9 +731,7 @@ export default function Dashboard() {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 px-24 pb-8 overflow-x-auto">
-          {renderTabContent()}
-        </div>
+        <div className="flex-1 overflow-x-auto">{renderTabContent()}</div>
 
         {/* Modal */}
         <ProjectModal
