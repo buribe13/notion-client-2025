@@ -315,12 +315,6 @@ export function Sidebar() {
 
         {/* Bottom User Section */}
         <div className="p-2 flex items-center gap-3">
-          <div
-            className="w-8 h-8 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: "#3d3d3d" }}
-          >
-            <User className="w-4 h-4" style={{ color: "#86837E" }} />
-          </div>
           <div className="flex-1">
             <div className="text-sm font-medium" style={{ color: "#e5e5e5" }}>
               Benjamin Uribe

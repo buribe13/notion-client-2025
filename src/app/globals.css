@@ -104,7 +104,7 @@
 body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
-  letter-spacing: 0.2pt;
+  letter-spacing: 0.2px;
 }
 
 /* Remove blue highlights */

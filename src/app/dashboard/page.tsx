@@ -1,11 +1,28 @@
 "use client";
 
 import { Sidebar } from "@/components/Sidebar";
-import { ProjectTable } from "@/components/ProjectTable";
 import { ProjectModal } from "@/components/ProjectModal";
 import { useDashboardStore } from "@/lib/store";
 import { motion } from "framer-motion";
-import { Sparkles, Share, Star } from "lucide-react";
+import {
+  Share,
+  Star,
+  MoreHorizontal,
+  Filter,
+  ArrowUpDown,
+  Search,
+  Plus,
+  ChevronDown,
+  CheckSquare,
+  List,
+  BarChart3,
+  Grid3X3,
+  Rss,
+  Calendar,
+  Circle,
+  Clock,
+  CheckCircle,
+} from "lucide-react";
 
 export default function DashboardPage() {
   const {
@@ -26,6 +43,32 @@ export default function DashboardPage() {
   const handleAddProject = () => {
     setSelectedProject(undefined);
     setIsModalOpen(true);
+  };
+
+  // Group projects by status
+  const todoProjects = projects.filter((p) => p.status === "Not Started");
+  const inProgressProjects = projects.filter((p) => p.status === "In Progress");
+  const completeProjects = projects.filter((p) => p.status === "Completed");
+
+  const getClientTypeColor = (clientType: string) => {
+    switch (clientType) {
+      case "Regular Client":
+        return "bg-green-500";
+      case "International":
+        return "bg-red-500";
+      case "New Client":
+        return "bg-blue-400";
+      case "Individual":
+        return "bg-orange-500";
+      case "Startup":
+        return "bg-orange-500";
+      case "Enterprise":
+        return "bg-purple-500";
+      case "Non-profit":
+        return "bg-green-400";
+      default:
+        return "bg-gray-500";
+    }
   };
 
   return (
@@ -66,31 +109,297 @@ export default function DashboardPage() {
                 style={{ color: "#86837E" }}
               >
                 <Share className="w-3 h-3 lg:w-4 lg:h-4" />
-                <span className="hidden lg:inline">Share</span>
+                <span className="hidden lg:inline text-sm">Share</span>
               </button>
               <button className="hover:opacity-80" style={{ color: "#86837E" }}>
                 <Star className="w-3 h-3 lg:w-4 lg:h-4" />
+              </button>
+              <button className="hover:opacity-80" style={{ color: "#86837E" }}>
+                <MoreHorizontal className="w-3 h-3 lg:w-4 lg:h-4" />
               </button>
             </div>
           </div>
         </div>
 
-        {/* Main Content */}
-        <ProjectTable projects={projects} />
+        {/* Page Title */}
+        <div className="px-12 py-4">
+          <div className="flex items-center gap-3 mb-6">
+            <CheckSquare className="w-6 h-6" style={{ color: "#e5e5e5" }} />
+            <h1 className="text-2xl font-semibold" style={{ color: "#e5e5e5" }}>
+              Freelance Projects
+            </h1>
+          </div>
 
-        {/* Floating Action Button */}
-        <motion.button
-          onClick={handleAddProject}
-          className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6 w-12 h-12 lg:w-14 lg:h-14 text-white rounded-full shadow-lg flex items-center justify-center z-40"
-          style={{ backgroundColor: "#3d3d3d" }}
-          whileHover={{ scale: 1.1, backgroundColor: "#4d4d4d" }}
-          whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.5 }}
-        >
-          <span className="text-xl lg:text-2xl">+</span>
-        </motion.button>
+          {/* Sub-menu Tabs */}
+          <div className="flex items-center gap-1 mb-6">
+            <button
+              className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5]"
+              style={{ borderRadius: "50px" }}
+            >
+              <BarChart3 className="w-4 h-4" />
+              <span className="text-sm">Project Board</span>
+            </button>
+            <button
+              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
+              style={{ borderRadius: "50px" }}
+            >
+              <List className="w-4 h-4" style={{ color: "#86837E" }} />
+              <span className="text-sm" style={{ color: "#86837E" }}>
+                All Projects
+              </span>
+            </button>
+            <button
+              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
+              style={{ borderRadius: "50px" }}
+            >
+              <BarChart3 className="w-4 h-4" style={{ color: "#86837E" }} />
+              <span className="text-sm" style={{ color: "#86837E" }}>
+                Chart
+              </span>
+            </button>
+            <button
+              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
+              style={{ borderRadius: "50px" }}
+            >
+              <Grid3X3 className="w-4 h-4" style={{ color: "#86837E" }} />
+              <span className="text-sm" style={{ color: "#86837E" }}>
+                Client Progress View
+              </span>
+            </button>
+            <button
+              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
+              style={{ borderRadius: "50px" }}
+            >
+              <Rss className="w-4 h-4" style={{ color: "#86837E" }} />
+              <span className="text-sm" style={{ color: "#86837E" }}>
+                Feed
+              </span>
+            </button>
+            <button
+              className="flex items-center gap-2 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
+              style={{ borderRadius: "50px" }}
+            >
+              <Calendar className="w-4 h-4" style={{ color: "#86837E" }} />
+              <span className="text-sm" style={{ color: "#86837E" }}>
+                Timeline
+              </span>
+            </button>
+
+            <div className="flex items-center gap-2 ml-auto">
+              <button
+                className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
+                style={{ borderRadius: "50px" }}
+              >
+                <Filter className="w-4 h-4" style={{ color: "#86837E" }} />
+              </button>
+              <button
+                className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
+                style={{ borderRadius: "50px" }}
+              >
+                <ArrowUpDown className="w-4 h-4" style={{ color: "#86837E" }} />
+              </button>
+              <button
+                className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
+                style={{ borderRadius: "50px" }}
+              >
+                <Search className="w-4 h-4" style={{ color: "#86837E" }} />
+              </button>
+              <button
+                className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors"
+                style={{ borderRadius: "50px" }}
+              >
+                <Plus className="w-4 h-4" />
+                <span className="text-sm">New</span>
+                <ChevronDown className="w-3 h-3" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Kanban Board */}
+        <div className="flex-1 px-12 pb-4 overflow-x-auto">
+          <div className="flex gap-4 h-full">
+            {/* To-do Column */}
+            <div className="w-[300px] flex-shrink-0">
+              <div
+                className="p-3"
+                style={{ backgroundColor: "#1F1F1F", borderRadius: "12px" }}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <Circle className="w-4 h-4" style={{ color: "#86837E" }} />
+                  <h3
+                    className="text-sm font-medium"
+                    style={{ color: "#86837E" }}
+                  >
+                    To-do
+                  </h3>
+                </div>
+                <div className="space-y-3">
+                  {todoProjects.map((project) => (
+                    <motion.div
+                      key={project.id}
+                      className="p-4 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors cursor-pointer"
+                      style={{ borderRadius: "12px" }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <h4
+                        className="text-sm font-medium mb-2"
+                        style={{ color: "#e5e5e5" }}
+                      >
+                        {project.name}
+                      </h4>
+                      <div className="space-y-2">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs text-white ${getClientTypeColor(
+                            project.clientType
+                          )}`}
+                        >
+                          {project.clientType}
+                        </span>
+                        <div className="text-xs" style={{ color: "#86837E" }}>
+                          {new Date(project.deadline).toLocaleDateString(
+                            "en-US",
+                            { month: "long", day: "numeric", year: "numeric" }
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                  <button
+                    className="text-sm hover:text-[#e5e5e5] transition-colors text-left"
+                    style={{ color: "#86837E" }}
+                  >
+                    <span>+ New item</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* In Progress Column */}
+            <div className="w-[300px] flex-shrink-0">
+              <div
+                className="p-3"
+                style={{ backgroundColor: "#191F26", borderRadius: "12px" }}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <Clock className="w-4 h-4" style={{ color: "#3b82f6" }} />
+                  <h3
+                    className="text-sm font-medium"
+                    style={{ color: "#3b82f6" }}
+                  >
+                    In progress
+                  </h3>
+                </div>
+                <div className="space-y-3">
+                  {inProgressProjects.map((project) => (
+                    <motion.div
+                      key={project.id}
+                      className="p-4 hover:bg-[#3d3d3d] transition-colors cursor-pointer"
+                      style={{
+                        backgroundColor: "#1E2A39",
+                        borderRadius: "12px",
+                      }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <h4
+                        className="text-sm font-medium mb-2"
+                        style={{ color: "#e5e5e5" }}
+                      >
+                        {project.name}
+                      </h4>
+                      <div className="space-y-2">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs text-white ${getClientTypeColor(
+                            project.clientType
+                          )}`}
+                        >
+                          {project.clientType}
+                        </span>
+                        <div className="text-xs" style={{ color: "#86837E" }}>
+                          {new Date(project.deadline).toLocaleDateString(
+                            "en-US",
+                            { month: "long", day: "numeric", year: "numeric" }
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                  <button
+                    className="text-sm hover:text-[#e5e5e5] transition-colors text-left"
+                    style={{ color: "#3b82f6" }}
+                  >
+                    <span>+ New item</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Complete Column */}
+            <div className="w-[300px] flex-shrink-0">
+              <div
+                className="p-3"
+                style={{ backgroundColor: "#1A201C", borderRadius: "12px" }}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <CheckCircle
+                    className="w-4 h-4"
+                    style={{ color: "#10b981" }}
+                  />
+                  <h3
+                    className="text-sm font-medium"
+                    style={{ color: "#10b981" }}
+                  >
+                    Complete
+                  </h3>
+                </div>
+                <div className="space-y-3">
+                  {completeProjects.map((project) => (
+                    <motion.div
+                      key={project.id}
+                      className="p-4 hover:bg-[#3d3d3d] transition-colors cursor-pointer"
+                      style={{
+                        backgroundColor: "#212E26",
+                        borderRadius: "12px",
+                      }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <h4
+                        className="text-sm font-medium mb-2"
+                        style={{ color: "#e5e5e5" }}
+                      >
+                        {project.name}
+                      </h4>
+                      <div className="space-y-2">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs text-white ${getClientTypeColor(
+                            project.clientType
+                          )}`}
+                        >
+                          {project.clientType}
+                        </span>
+                        <div className="text-xs" style={{ color: "#86837E" }}>
+                          {new Date(project.deadline).toLocaleDateString(
+                            "en-US",
+                            { month: "long", day: "numeric", year: "numeric" }
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                  <button
+                    className="text-sm hover:text-[#e5e5e5] transition-colors text-left"
+                    style={{ color: "#10b981" }}
+                  >
+                    <span>+ New item</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Modal */}
         <ProjectModal
