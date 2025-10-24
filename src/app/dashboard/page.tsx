@@ -533,16 +533,483 @@ export default function Dashboard() {
         );
       case "Feed":
         return (
-          <div className="px-24 pb-8">
-            <h2
-              className="text-xl font-semibold mb-4"
-              style={{ color: "#e5e5e5" }}
-            >
-              Activity Feed
-            </h2>
-            <p className="text-sm" style={{ color: "#86837E" }}>
-              Stay updated with recent project activities and milestones.
-            </p>
+          <div className="px-24 pb-8 flex justify-center">
+            <div className="w-[600px]">
+              <div className="flex items-center justify-end mb-3">
+                <button
+                  className="p-2 hover:opacity-70 transition-opacity rounded"
+                  onClick={() => {
+                    /* Handle new post */
+                  }}
+                >
+                  <Plus className="w-5 h-5" style={{ color: "#86837E" }} />
+                </button>
+              </div>
+
+              {/* Feed Posts */}
+              <div className="space-y-4">
+                {/* Post 1 */}
+                <motion.div
+                  className="p-6 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors"
+                  style={{ borderRadius: "12px" }}
+                  whileHover={{ opacity: 0.95 }}
+                >
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                      BU
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span
+                          className="text-sm font-medium"
+                          style={{ color: "#e5e5e5" }}
+                        >
+                          Benjamin Uribe
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • 5h ago
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • Marketing Collateral
+                        </span>
+                      </div>
+                    </div>
+                    <button className="p-1 hover:bg-[#4d4d4d] rounded transition-colors">
+                      <MoreHorizontal
+                        className="w-4 h-4"
+                        style={{ color: "#86837E" }}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="mb-4">
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: "#e5e5e5" }}
+                    >
+                      Just finished the initial mockups for the new marketing
+                      campaign. Looking for feedback on the color scheme and
+                      overall direction. The client wants something that feels
+                      modern but approachable.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4 mb-4">
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <TrendingUp className="w-4 h-4" />
+                      <span>12 likes</span>
+                    </button>
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <Share className="w-4 h-4" />
+                      <span>3 shares</span>
+                    </button>
+                  </div>
+
+                  {/* Comments Section */}
+                  <div className="border-t border-[#3d3d3d] pt-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-6 h-6 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                        SJ
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span
+                            className="text-xs font-medium"
+                            style={{ color: "#e5e5e5" }}
+                          >
+                            Sarah Johnson
+                          </span>
+                          <span
+                            className="text-xs"
+                            style={{ color: "#86837E" }}
+                          >
+                            • 2h ago
+                          </span>
+                        </div>
+                        <p
+                          className="text-xs leading-relaxed"
+                          style={{ color: "#e5e5e5" }}
+                        >
+                          Love the direction! The blue gradient works really
+                          well. Maybe we could try a slightly warmer tone for
+                          the CTA buttons?
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                        MJ
+                      </div>
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          placeholder="Add a comment..."
+                          className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                          style={{ color: "#e5e5e5" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Post 2 */}
+                <motion.div
+                  className="p-6 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors"
+                  style={{ borderRadius: "12px" }}
+                  whileHover={{ opacity: 0.95 }}
+                >
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                      AC
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span
+                          className="text-sm font-medium"
+                          style={{ color: "#e5e5e5" }}
+                        >
+                          Alex Chen
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • 8h ago
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • App UI/UX Redesign
+                        </span>
+                      </div>
+                    </div>
+                    <button className="p-1 hover:bg-[#4d4d4d] rounded transition-colors">
+                      <MoreHorizontal
+                        className="w-4 h-4"
+                        style={{ color: "#86837E" }}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="mb-4">
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: "#e5e5e5" }}
+                    >
+                      Need some input on the user flow for the onboarding
+                      process. Should we go with a step-by-step wizard or a
+                      single-page form? Each has its pros and cons.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4 mb-4">
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <TrendingUp className="w-4 h-4" />
+                      <span>8 likes</span>
+                    </button>
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <Share className="w-4 h-4" />
+                      <span>1 share</span>
+                    </button>
+                  </div>
+
+                  {/* Comments Section */}
+                  <div className="border-t border-[#3d3d3d] pt-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                        BU
+                      </div>
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          placeholder="Add a comment..."
+                          className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                          style={{ color: "#e5e5e5" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Post 3 */}
+                <motion.div
+                  className="p-6 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors"
+                  style={{ borderRadius: "12px" }}
+                  whileHover={{ opacity: 0.95 }}
+                >
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                      MJ
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span
+                          className="text-sm font-medium"
+                          style={{ color: "#e5e5e5" }}
+                        >
+                          Maria Rodriguez
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • 1d ago
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • Content Strategy
+                        </span>
+                      </div>
+                    </div>
+                    <button className="p-1 hover:bg-[#4d4d4d] rounded transition-colors">
+                      <MoreHorizontal
+                        className="w-4 h-4"
+                        style={{ color: "#86837E" }}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="mb-4">
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: "#e5e5e5" }}
+                    >
+                      Content calendar is ready for Q1! We're focusing on
+                      thought leadership pieces and case studies. Any
+                      suggestions for topics that would resonate with our target
+                      audience?
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4 mb-4">
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <TrendingUp className="w-4 h-4" />
+                      <span>15 likes</span>
+                    </button>
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <Share className="w-4 h-4" />
+                      <span>5 shares</span>
+                    </button>
+                  </div>
+
+                  {/* Comments Section */}
+                  <div className="border-t border-[#3d3d3d] pt-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                        BU
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span
+                            className="text-xs font-medium"
+                            style={{ color: "#e5e5e5" }}
+                          >
+                            Benjamin Uribe
+                          </span>
+                          <span
+                            className="text-xs"
+                            style={{ color: "#86837E" }}
+                          >
+                            • 12h ago
+                          </span>
+                        </div>
+                        <p
+                          className="text-xs leading-relaxed"
+                          style={{ color: "#e5e5e5" }}
+                        >
+                          How about a series on "Design Trends 2025"? That seems
+                          to be getting a lot of engagement lately.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                        AC
+                      </div>
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          placeholder="Add a comment..."
+                          className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                          style={{ color: "#e5e5e5" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Post 4 */}
+                <motion.div
+                  className="p-6 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors"
+                  style={{ borderRadius: "12px" }}
+                  whileHover={{ opacity: 0.95 }}
+                >
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                      DK
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span
+                          className="text-sm font-medium"
+                          style={{ color: "#e5e5e5" }}
+                        >
+                          David Kim
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • 2d ago
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • E-commerce Website
+                        </span>
+                      </div>
+                    </div>
+                    <button className="p-1 hover:bg-[#4d4d4d] rounded transition-colors">
+                      <MoreHorizontal
+                        className="w-4 h-4"
+                        style={{ color: "#86837E" }}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="mb-4">
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: "#e5e5e5" }}
+                    >
+                      Performance optimization complete! Page load times
+                      improved by 40%. The new caching strategy is working
+                      really well.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4 mb-4">
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <TrendingUp className="w-4 h-4" />
+                      <span>23 likes</span>
+                    </button>
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <Share className="w-4 h-4" />
+                      <span>7 shares</span>
+                    </button>
+                  </div>
+
+                  {/* Comments Section */}
+                  <div className="border-t border-[#3d3d3d] pt-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                        MJ
+                      </div>
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          placeholder="Add a comment..."
+                          className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                          style={{ color: "#e5e5e5" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Post 5 */}
+                <motion.div
+                  className="p-6 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors"
+                  style={{ borderRadius: "12px" }}
+                  whileHover={{ opacity: 0.95 }}
+                >
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                      LT
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span
+                          className="text-sm font-medium"
+                          style={{ color: "#e5e5e5" }}
+                        >
+                          Lisa Thompson
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • 3d ago
+                        </span>
+                        <span className="text-xs" style={{ color: "#86837E" }}>
+                          • Product Launch Campaign
+                        </span>
+                      </div>
+                    </div>
+                    <button className="p-1 hover:bg-[#4d4d4d] rounded transition-colors">
+                      <MoreHorizontal
+                        className="w-4 h-4"
+                        style={{ color: "#86837E" }}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="mb-4">
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: "#e5e5e5" }}
+                    >
+                      Launch day is approaching! All assets are ready and the
+                      team is excited. Let's make sure we're all aligned on the
+                      rollout timeline.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4 mb-4">
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <TrendingUp className="w-4 h-4" />
+                      <span>31 likes</span>
+                    </button>
+                    <button
+                      className="flex items-center gap-2 text-sm hover:text-[#e5e5e5] transition-colors"
+                      style={{ color: "#86837E" }}
+                    >
+                      <Share className="w-4 h-4" />
+                      <span>12 shares</span>
+                    </button>
+                  </div>
+
+                  {/* Comments Section */}
+                  <div className="border-t border-[#3d3d3d] pt-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                        BU
+                      </div>
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          placeholder="Add a comment..."
+                          className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                          style={{ color: "#e5e5e5" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
           </div>
         );
       case "Timeline":
