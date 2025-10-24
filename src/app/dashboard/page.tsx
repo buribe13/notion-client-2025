@@ -34,18 +34,11 @@ export default function DashboardPage() {
 
       <div className="flex-1 flex flex-col lg:ml-0">
         {/* Top Bar */}
-        <div
-          className="px-4 lg:px-6 py-4"
-          style={{ backgroundColor: "#181818" }}
-        >
+        <div className="px-3 py-1" style={{ backgroundColor: "#181818" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">
-              <Sparkles
-                className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0"
-                style={{ color: "#86837E" }}
-              />
               <span
-                className="text-sm lg:text-base truncate"
+                className="text-xs lg:text-sm truncate"
                 style={{ color: "#86837E" }}
               >
                 dashboard / breadcrumb...
@@ -54,7 +47,7 @@ export default function DashboardPage() {
                 /
               </span>
               <span
-                className="text-sm lg:text-base truncate"
+                className="text-xs lg:text-sm truncate"
                 style={{ color: "#e5e5e5" }}
               >
                 Freelance Projects
