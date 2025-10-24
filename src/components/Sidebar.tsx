@@ -79,10 +79,10 @@ export function Sidebar() {
         )}
       >
         {/* Header */}
-        <div className="p-2">
-          <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors mb-4">
+        <div className="p-1">
+          <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
             <div
-              className="w-6 h-6 rounded-full"
+              className="w-5 h-5 rounded-full"
               style={{ backgroundColor: "#ff6b35" }}
             ></div>
             <span className="text-sm font-medium" style={{ color: "#86837E" }}>
@@ -141,10 +141,7 @@ export function Sidebar() {
               {!collapsedSections.favorites && (
                 <div className="space-y-1">
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <Calendar
-                      className="w-4 h-4"
-                      style={{ color: "#86837E" }}
-                    />
+                    <span className="text-sm">📅</span>
                     <span className="text-sm" style={{ color: "#86837E" }}>
                       WKLY AGENDA
                     </span>
@@ -156,10 +153,7 @@ export function Sidebar() {
                     </span>
                   </div>
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <Sparkles
-                      className="w-4 h-4"
-                      style={{ color: "#86837E" }}
-                    />
+                    <span className="text-sm">✨</span>
                     <span className="text-sm" style={{ color: "#86837E" }}>
                       dashboard / breadcrumb...
                     </span>
@@ -180,25 +174,19 @@ export function Sidebar() {
               {!collapsedSections.workspace && (
                 <div className="space-y-1">
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <Sparkles
-                      className="w-4 h-4"
-                      style={{ color: "#86837E" }}
-                    />
+                    <span className="text-sm">✨</span>
                     <span className="text-sm" style={{ color: "#86837E" }}>
                       dashboard / breadcrumb...
                     </span>
                   </div>
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <Apple className="w-4 h-4" style={{ color: "#86837E" }} />
+                    <span className="text-sm">🍎</span>
                     <span className="text-sm" style={{ color: "#86837E" }}>
                       My Dashboard
                     </span>
                   </div>
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <FileText
-                      className="w-4 h-4"
-                      style={{ color: "#86837E" }}
-                    />
+                    <span className="text-sm">📄</span>
                     <span className="text-sm" style={{ color: "#86837E" }}>
                       UX project planner/tracker
                     </span>
@@ -219,7 +207,7 @@ export function Sidebar() {
               {!collapsedSections.shared && (
                 <div className="space-y-1">
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <Apple className="w-4 h-4" style={{ color: "#86837E" }} />
+                    <span className="text-sm">🍎</span>
                     <span className="text-sm" style={{ color: "#86837E" }}>
                       My Dashboard
                     </span>
@@ -240,19 +228,13 @@ export function Sidebar() {
               {!collapsedSections.private && (
                 <div className="space-y-1">
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <FileText
-                      className="w-4 h-4"
-                      style={{ color: "#86837E" }}
-                    />
+                    <span className="text-sm">📄</span>
                     <span className="text-sm" style={{ color: "#86837E" }}>
                       New page
                     </span>
                   </div>
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <FileText
-                      className="w-4 h-4"
-                      style={{ color: "#86837E" }}
-                    />
+                    <span className="text-sm">📄</span>
                     <span className="text-sm" style={{ color: "#86837E" }}>
                       MAX New Site Thoughts
                     </span>
@@ -260,7 +242,7 @@ export function Sidebar() {
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
                     <Plus className="w-4 h-4" style={{ color: "#86837E" }} />
                     <span className="text-sm" style={{ color: "#86837E" }}>
-                      + Add new
+                      Add new
                     </span>
                   </div>
                 </div>
