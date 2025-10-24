@@ -59,219 +59,224 @@ export default function Dashboard() {
     switch (activeTab) {
       case "Project Board":
         return (
-          <div className="flex gap-4 h-full">
-            {/* To-do Column */}
-            <div className="w-[300px] flex-shrink-0">
-              <div
-                className="p-3"
-                style={{ backgroundColor: "#1F1F1F", borderRadius: "12px" }}
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <Circle className="w-4 h-4" style={{ color: "#86837E" }} />
-                  <h3
-                    className="text-sm font-medium"
-                    style={{ color: "#86837E" }}
-                  >
-                    To-do
-                  </h3>
-                </div>
-                <div className="space-y-1.5">
-                  {todoProjects.map((project) => (
-                    <motion.div
-                      key={project.id}
-                      className="p-4 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors cursor-pointer"
-                      style={{ borderRadius: "12px" }}
-                      whileHover={{ opacity: 0.8 }}
-                      whileTap={{ opacity: 0.9 }}
+          <div className="px-24 pb-8">
+            <div className="flex gap-4 h-full">
+              {/* To-do Column */}
+              <div className="w-[300px] flex-shrink-0">
+                <div
+                  className="p-3"
+                  style={{ backgroundColor: "#1F1F1F", borderRadius: "12px" }}
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <Circle className="w-4 h-4" style={{ color: "#86837E" }} />
+                    <h3
+                      className="text-sm font-medium"
+                      style={{ color: "#86837E" }}
                     >
-                      <h4
-                        className="text-sm font-medium mb-2"
-                        style={{ color: "#e5e5e5" }}
+                      To-do
+                    </h3>
+                  </div>
+                  <div className="space-y-1.5">
+                    {todoProjects.map((project) => (
+                      <motion.div
+                        key={project.id}
+                        className="p-4 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors cursor-pointer"
+                        style={{ borderRadius: "12px" }}
+                        whileHover={{ opacity: 0.8 }}
+                        whileTap={{ opacity: 0.9 }}
                       >
-                        {project.name}
-                      </h4>
-                      <div className="space-y-3">
-                        <span
-                          className={`px-2 py-1 text-xs ${
-                            getClientTypeColor(project.clientType) === "#FBF3DA"
-                              ? "text-black"
-                              : "text-white"
-                          }`}
-                          style={{
-                            backgroundColor: getClientTypeColor(
-                              project.clientType
-                            ),
-                            borderRadius: "4px",
-                          }}
+                        <h4
+                          className="text-sm font-medium mb-2"
+                          style={{ color: "#e5e5e5" }}
                         >
-                          {project.clientType}
-                        </span>
-                        <div className="text-xs" style={{ color: "#86837E" }}>
-                          {new Date(project.deadline).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "long",
-                              day: "numeric",
-                              year: "numeric",
-                            }
-                          )}
+                          {project.name}
+                        </h4>
+                        <div className="space-y-3">
+                          <span
+                            className={`px-2 py-1 text-xs ${
+                              getClientTypeColor(project.clientType) ===
+                              "#FBF3DA"
+                                ? "text-black"
+                                : "text-white"
+                            }`}
+                            style={{
+                              backgroundColor: getClientTypeColor(
+                                project.clientType
+                              ),
+                              borderRadius: "4px",
+                            }}
+                          >
+                            {project.clientType}
+                          </span>
+                          <div className="text-xs" style={{ color: "#86837E" }}>
+                            {new Date(project.deadline).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                  <button
-                    className="text-sm hover:text-[#e5e5e5] transition-colors text-left"
-                    style={{ color: "#86837E" }}
-                  >
-                    <span>+ New item</span>
-                  </button>
+                      </motion.div>
+                    ))}
+                    <button
+                      className="text-sm hover:text-[#e5e5e5] transition-colors text-left"
+                      style={{ color: "#86837E" }}
+                    >
+                      <span>+ New item</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* In Progress Column */}
-            <div className="w-[300px] flex-shrink-0">
-              <div
-                className="p-3"
-                style={{ backgroundColor: "#191F26", borderRadius: "12px" }}
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <Clock className="w-4 h-4" style={{ color: "#3b82f6" }} />
-                  <h3
-                    className="text-sm font-medium"
-                    style={{ color: "#3b82f6" }}
-                  >
-                    In progress
-                  </h3>
-                </div>
-                <div className="space-y-1.5">
-                  {inProgressProjects.map((project) => (
-                    <motion.div
-                      key={project.id}
-                      className="p-4 hover:bg-[#3d3d3d] transition-colors cursor-pointer"
-                      style={{
-                        backgroundColor: "#1E2A39",
-                        borderRadius: "12px",
-                      }}
-                      whileHover={{ opacity: 0.8 }}
-                      whileTap={{ opacity: 0.9 }}
+              {/* In Progress Column */}
+              <div className="w-[300px] flex-shrink-0">
+                <div
+                  className="p-3"
+                  style={{ backgroundColor: "#191F26", borderRadius: "12px" }}
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <Clock className="w-4 h-4" style={{ color: "#3b82f6" }} />
+                    <h3
+                      className="text-sm font-medium"
+                      style={{ color: "#3b82f6" }}
                     >
-                      <h4
-                        className="text-sm font-medium mb-2"
-                        style={{ color: "#e5e5e5" }}
+                      In progress
+                    </h3>
+                  </div>
+                  <div className="space-y-1.5">
+                    {inProgressProjects.map((project) => (
+                      <motion.div
+                        key={project.id}
+                        className="p-4 hover:bg-[#3d3d3d] transition-colors cursor-pointer"
+                        style={{
+                          backgroundColor: "#1E2A39",
+                          borderRadius: "12px",
+                        }}
+                        whileHover={{ opacity: 0.8 }}
+                        whileTap={{ opacity: 0.9 }}
                       >
-                        {project.name}
-                      </h4>
-                      <div className="space-y-3">
-                        <span
-                          className={`px-2 py-1 text-xs ${
-                            getClientTypeColor(project.clientType) === "#FBF3DA"
-                              ? "text-black"
-                              : "text-white"
-                          }`}
-                          style={{
-                            backgroundColor: getClientTypeColor(
-                              project.clientType
-                            ),
-                            borderRadius: "4px",
-                          }}
+                        <h4
+                          className="text-sm font-medium mb-2"
+                          style={{ color: "#e5e5e5" }}
                         >
-                          {project.clientType}
-                        </span>
-                        <div className="text-xs" style={{ color: "#86837E" }}>
-                          {new Date(project.deadline).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "long",
-                              day: "numeric",
-                              year: "numeric",
-                            }
-                          )}
+                          {project.name}
+                        </h4>
+                        <div className="space-y-3">
+                          <span
+                            className={`px-2 py-1 text-xs ${
+                              getClientTypeColor(project.clientType) ===
+                              "#FBF3DA"
+                                ? "text-black"
+                                : "text-white"
+                            }`}
+                            style={{
+                              backgroundColor: getClientTypeColor(
+                                project.clientType
+                              ),
+                              borderRadius: "4px",
+                            }}
+                          >
+                            {project.clientType}
+                          </span>
+                          <div className="text-xs" style={{ color: "#86837E" }}>
+                            {new Date(project.deadline).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                  <button
-                    className="text-sm hover:text-[#e5e5e5] transition-colors text-left"
-                    style={{ color: "#3b82f6" }}
-                  >
-                    <span>+ New item</span>
-                  </button>
+                      </motion.div>
+                    ))}
+                    <button
+                      className="text-sm hover:text-[#e5e5e5] transition-colors text-left"
+                      style={{ color: "#3b82f6" }}
+                    >
+                      <span>+ New item</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Complete Column */}
-            <div className="w-[300px] flex-shrink-0">
-              <div
-                className="p-3"
-                style={{ backgroundColor: "#1A201C", borderRadius: "12px" }}
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <CheckCircle
-                    className="w-4 h-4"
-                    style={{ color: "#10b981" }}
-                  />
-                  <h3
-                    className="text-sm font-medium"
-                    style={{ color: "#10b981" }}
-                  >
-                    Complete
-                  </h3>
-                </div>
-                <div className="space-y-1.5">
-                  {completeProjects.map((project) => (
-                    <motion.div
-                      key={project.id}
-                      className="p-4 hover:bg-[#3d3d3d] transition-colors cursor-pointer"
-                      style={{
-                        backgroundColor: "#212E26",
-                        borderRadius: "12px",
-                      }}
-                      whileHover={{ opacity: 0.8 }}
-                      whileTap={{ opacity: 0.9 }}
+              {/* Complete Column */}
+              <div className="w-[300px] flex-shrink-0">
+                <div
+                  className="p-3"
+                  style={{ backgroundColor: "#1A201C", borderRadius: "12px" }}
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <CheckCircle
+                      className="w-4 h-4"
+                      style={{ color: "#10b981" }}
+                    />
+                    <h3
+                      className="text-sm font-medium"
+                      style={{ color: "#10b981" }}
                     >
-                      <h4
-                        className="text-sm font-medium mb-2"
-                        style={{ color: "#e5e5e5" }}
+                      Complete
+                    </h3>
+                  </div>
+                  <div className="space-y-1.5">
+                    {completeProjects.map((project) => (
+                      <motion.div
+                        key={project.id}
+                        className="p-4 hover:bg-[#3d3d3d] transition-colors cursor-pointer"
+                        style={{
+                          backgroundColor: "#212E26",
+                          borderRadius: "12px",
+                        }}
+                        whileHover={{ opacity: 0.8 }}
+                        whileTap={{ opacity: 0.9 }}
                       >
-                        {project.name}
-                      </h4>
-                      <div className="space-y-3">
-                        <span
-                          className={`px-2 py-1 text-xs ${
-                            getClientTypeColor(project.clientType) === "#FBF3DA"
-                              ? "text-black"
-                              : "text-white"
-                          }`}
-                          style={{
-                            backgroundColor: getClientTypeColor(
-                              project.clientType
-                            ),
-                            borderRadius: "4px",
-                          }}
+                        <h4
+                          className="text-sm font-medium mb-2"
+                          style={{ color: "#e5e5e5" }}
                         >
-                          {project.clientType}
-                        </span>
-                        <div className="text-xs" style={{ color: "#86837E" }}>
-                          {new Date(project.deadline).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "long",
-                              day: "numeric",
-                              year: "numeric",
-                            }
-                          )}
+                          {project.name}
+                        </h4>
+                        <div className="space-y-3">
+                          <span
+                            className={`px-2 py-1 text-xs ${
+                              getClientTypeColor(project.clientType) ===
+                              "#FBF3DA"
+                                ? "text-black"
+                                : "text-white"
+                            }`}
+                            style={{
+                              backgroundColor: getClientTypeColor(
+                                project.clientType
+                              ),
+                              borderRadius: "4px",
+                            }}
+                          >
+                            {project.clientType}
+                          </span>
+                          <div className="text-xs" style={{ color: "#86837E" }}>
+                            {new Date(project.deadline).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                  <button
-                    className="text-sm hover:text-[#e5e5e5] transition-colors text-left"
-                    style={{ color: "#10b981" }}
-                  >
-                    <span>+ New item</span>
-                  </button>
+                      </motion.div>
+                    ))}
+                    <button
+                      className="text-sm hover:text-[#e5e5e5] transition-colors text-left"
+                      style={{ color: "#10b981" }}
+                    >
+                      <span>+ New item</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
