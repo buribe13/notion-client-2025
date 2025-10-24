@@ -24,12 +24,26 @@ import { cn } from "@/lib/utils";
 export function Sidebar() {
   const [isInviteOpen, setIsInviteOpen] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [collapsedSections, setCollapsedSections] = useState({
+    favorites: false,
+    workspace: false,
+    shared: false,
+    private: false,
+  });
+
+  const toggleSection = (section: keyof typeof collapsedSections) => {
+    setCollapsedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
 
   return (
     <>
       {/* Mobile Menu Button */}
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-gray-800 text-white rounded-md"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 text-white rounded-md"
+        style={{ backgroundColor: "#2C2C2B" }}
         onClick={() => setIsMobileOpen(!isMobileOpen)}
       >
         <svg
@@ -68,129 +82,240 @@ export function Sidebar() {
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <span className="font-semibold">benjamin's Notion</span>
-              <ChevronDown className="w-4 h-4 text-gray-400" />
+              <span className="font-semibold" style={{ color: "#e5e5e5" }}>
+                benjamin's Notion
+              </span>
+              <ChevronDown className="w-4 h-4" style={{ color: "#86837E" }} />
             </div>
-            <Edit className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
-          </div>
-
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-600 rounded-md text-sm focus:outline-none focus:border-blue-500"
+            <Edit
+              className="w-4 h-4 hover:opacity-80 cursor-pointer"
+              style={{ color: "#86837E" }}
             />
           </div>
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 p-4 space-y-1">
-          {/* Core Navigation */}
-          <div className="space-y-1 mb-6">
-            <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-              <Home className="w-4 h-4" />
-              <span className="text-sm">Home</span>
-            </div>
-            <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-              <Sparkles className="w-4 h-4" />
-              <span className="text-sm">Notion AI</span>
-            </div>
-            <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-              <Inbox className="w-4 h-4" />
-              <span className="text-sm">Inbox</span>
-            </div>
-          </div>
-
-          {/* Favorites */}
+        <div className="flex-1 p-4">
+          {/* Core Navigation Section */}
           <div className="mb-6">
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">
-              Favorites
-            </div>
             <div className="space-y-1">
-              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-                <Calendar className="w-4 h-4" />
-                <span className="text-sm">WKLY AGENDA</span>
-                <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full ml-auto">
-                  17
+              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                <Search className="w-4 h-4" style={{ color: "#86837E" }} />
+                <span className="text-sm" style={{ color: "#86837E" }}>
+                  Search
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-                <Sparkles className="w-4 h-4" />
-                <span className="text-sm">dashboard / breadcrumb...</span>
+              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                <Home className="w-4 h-4" style={{ color: "#86837E" }} />
+                <span className="text-sm" style={{ color: "#86837E" }}>
+                  Home
+                </span>
+              </div>
+              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                <Sparkles className="w-4 h-4" style={{ color: "#86837E" }} />
+                <span className="text-sm" style={{ color: "#86837E" }}>
+                  Notion AI
+                </span>
+              </div>
+              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                <Inbox className="w-4 h-4" style={{ color: "#86837E" }} />
+                <span className="text-sm" style={{ color: "#86837E" }}>
+                  Inbox
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Workspace */}
+          {/* Collapsible Sections */}
           <div className="mb-6">
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">
-              Workspace
+            {/* Favorites */}
+            <div className="mb-3">
+              <button
+                onClick={() => toggleSection("favorites")}
+                className="flex items-center gap-2 w-full font-normal text-xs uppercase tracking-wider mb-2 px-3 py-1 hover:opacity-80"
+                style={{ color: "#86837E", fontSize: "9pt" }}
+              >
+                <ChevronDown
+                  className={cn(
+                    "w-3 h-3 transition-transform",
+                    collapsedSections.favorites && "rotate-[-90deg]"
+                  )}
+                  style={{ color: "#86837E" }}
+                />
+                Favorites
+              </button>
+              {!collapsedSections.favorites && (
+                <div className="space-y-1">
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                    <Calendar
+                      className="w-4 h-4"
+                      style={{ color: "#86837E" }}
+                    />
+                    <span className="text-sm" style={{ color: "#86837E" }}>
+                      WKLY AGENDA
+                    </span>
+                    <span
+                      className="text-xs px-2 py-0.5 rounded-full ml-auto"
+                      style={{ backgroundColor: "#3d3d3d", color: "#e5e5e5" }}
+                    >
+                      17
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                    <Sparkles
+                      className="w-4 h-4"
+                      style={{ color: "#86837E" }}
+                    />
+                    <span className="text-sm" style={{ color: "#86837E" }}>
+                      dashboard / breadcrumb...
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-                <Sparkles className="w-4 h-4" />
-                <span className="text-sm">dashboard / breadcrumb...</span>
-              </div>
-              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-                <Apple className="w-4 h-4" />
-                <span className="text-sm">My Dashboard</span>
-              </div>
-              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-                <FileText className="w-4 h-4" />
-                <span className="text-sm">UX project planner/tracker</span>
-              </div>
+
+            {/* Workspace */}
+            <div className="mb-3">
+              <button
+                onClick={() => toggleSection("workspace")}
+                className="flex items-center gap-2 w-full font-normal text-xs uppercase tracking-wider mb-2 px-3 py-1 hover:opacity-80"
+                style={{ color: "#86837E", fontSize: "9pt" }}
+              >
+                <ChevronDown
+                  className={cn(
+                    "w-3 h-3 transition-transform",
+                    collapsedSections.workspace && "rotate-[-90deg]"
+                  )}
+                  style={{ color: "#86837E" }}
+                />
+                Workspace
+              </button>
+              {!collapsedSections.workspace && (
+                <div className="space-y-1">
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                    <Sparkles
+                      className="w-4 h-4"
+                      style={{ color: "#86837E" }}
+                    />
+                    <span className="text-sm" style={{ color: "#86837E" }}>
+                      dashboard / breadcrumb...
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                    <Apple className="w-4 h-4" style={{ color: "#86837E" }} />
+                    <span className="text-sm" style={{ color: "#86837E" }}>
+                      My Dashboard
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                    <FileText
+                      className="w-4 h-4"
+                      style={{ color: "#86837E" }}
+                    />
+                    <span className="text-sm" style={{ color: "#86837E" }}>
+                      UX project planner/tracker
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Shared */}
+            <div className="mb-3">
+              <button
+                onClick={() => toggleSection("shared")}
+                className="flex items-center gap-2 w-full font-normal text-xs uppercase tracking-wider mb-2 px-3 py-1 hover:opacity-80"
+                style={{ color: "#86837E", fontSize: "9pt" }}
+              >
+                <ChevronDown
+                  className={cn(
+                    "w-3 h-3 transition-transform",
+                    collapsedSections.shared && "rotate-[-90deg]"
+                  )}
+                  style={{ color: "#86837E" }}
+                />
+                Shared
+              </button>
+              {!collapsedSections.shared && (
+                <div className="space-y-1">
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                    <Apple className="w-4 h-4" style={{ color: "#86837E" }} />
+                    <span className="text-sm" style={{ color: "#86837E" }}>
+                      My Dashboard
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Private */}
+            <div className="mb-3">
+              <button
+                onClick={() => toggleSection("private")}
+                className="flex items-center gap-2 w-full font-normal text-xs uppercase tracking-wider mb-2 px-3 py-1 hover:opacity-80"
+                style={{ color: "#86837E", fontSize: "9pt" }}
+              >
+                <ChevronDown
+                  className={cn(
+                    "w-3 h-3 transition-transform",
+                    collapsedSections.private && "rotate-[-90deg]"
+                  )}
+                  style={{ color: "#86837E" }}
+                />
+                Private
+              </button>
+              {!collapsedSections.private && (
+                <div className="space-y-1">
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                    <FileText
+                      className="w-4 h-4"
+                      style={{ color: "#86837E" }}
+                    />
+                    <span className="text-sm" style={{ color: "#86837E" }}>
+                      New page
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                    <FileText
+                      className="w-4 h-4"
+                      style={{ color: "#86837E" }}
+                    />
+                    <span className="text-sm" style={{ color: "#86837E" }}>
+                      MAX New Site Thoughts
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                    <Plus className="w-4 h-4" style={{ color: "#86837E" }} />
+                    <span className="text-sm" style={{ color: "#86837E" }}>
+                      + Add new
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Shared */}
+          {/* Bottom Navigation Section */}
           <div className="mb-6">
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">
-              Shared
-            </div>
             <div className="space-y-1">
-              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-                <Apple className="w-4 h-4" />
-                <span className="text-sm">My Dashboard</span>
+              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                <Settings className="w-4 h-4" style={{ color: "#86837E" }} />
+                <span className="text-sm" style={{ color: "#86837E" }}>
+                  Settings
+                </span>
               </div>
-            </div>
-          </div>
-
-          {/* Private */}
-          <div className="mb-6">
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">
-              Private
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-                <FileText className="w-4 h-4" />
-                <span className="text-sm">New page</span>
+              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                <ShoppingBag className="w-4 h-4" style={{ color: "#86837E" }} />
+                <span className="text-sm" style={{ color: "#86837E" }}>
+                  Marketplace
+                </span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-                <FileText className="w-4 h-4" />
-                <span className="text-sm">MAX New Site Thoughts</span>
+              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:opacity-80 cursor-pointer">
+                <Trash2 className="w-4 h-4" style={{ color: "#86837E" }} />
+                <span className="text-sm" style={{ color: "#86837E" }}>
+                  Trash
+                </span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-                <Plus className="w-4 h-4" />
-                <span className="text-sm">+ Add new</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Navigation */}
-          <div className="space-y-1">
-            <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-              <Settings className="w-4 h-4" />
-              <span className="text-sm">Settings</span>
-            </div>
-            <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-              <ShoppingBag className="w-4 h-4" />
-              <span className="text-sm">Marketplace</span>
-            </div>
-            <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 cursor-pointer">
-              <Trash2 className="w-4 h-4" />
-              <span className="text-sm">Trash</span>
             </div>
           </div>
         </div>
@@ -199,7 +324,11 @@ export function Sidebar() {
         <AnimatePresence>
           {isInviteOpen && (
             <motion.div
-              className="absolute bottom-20 left-4 right-4 bg-gray-800 border border-gray-600 rounded-lg p-4 shadow-lg"
+              className="absolute bottom-20 left-4 right-4 rounded-lg p-4 shadow-lg"
+              style={{
+                backgroundColor: "#3d3d3d",
+                border: "1px solid #4d4d4d",
+              }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
@@ -207,16 +336,20 @@ export function Sidebar() {
             >
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3 className="text-sm font-semibold text-white">
+                  <h3
+                    className="text-sm font-semibold"
+                    style={{ color: "#e5e5e5" }}
+                  >
                     Invite members
                   </h3>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs" style={{ color: "#86837E" }}>
                     Collaborate with your team.
                   </p>
                 </div>
                 <button
                   onClick={() => setIsInviteOpen(false)}
-                  className="text-gray-400 hover:text-white"
+                  className="hover:opacity-80"
+                  style={{ color: "#86837E" }}
                 >
                   ×
                 </button>
@@ -227,14 +360,24 @@ export function Sidebar() {
 
         {/* Bottom User Section */}
         <div className="p-4 flex items-center gap-3">
-          <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
-            <User className="w-4 h-4" />
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center"
+            style={{ backgroundColor: "#3d3d3d" }}
+          >
+            <User className="w-4 h-4" style={{ color: "#86837E" }} />
           </div>
           <div className="flex-1">
-            <div className="text-sm font-medium">Benjamin Uribe</div>
-            <div className="text-xs text-gray-400">Free plan</div>
+            <div className="text-sm font-medium" style={{ color: "#e5e5e5" }}>
+              Benjamin Uribe
+            </div>
+            <div className="text-xs" style={{ color: "#86837E" }}>
+              Free plan
+            </div>
           </div>
-          <Send className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer" />
+          <Send
+            className="w-4 h-4 hover:opacity-80 cursor-pointer"
+            style={{ color: "#86837E" }}
+          />
         </div>
       </div>
     </>

@@ -70,12 +70,12 @@
 
 /* Custom Notion-inspired styles */
 .notion-sidebar {
-  background: #191919;
+  background: #2c2c2b;
   border-right: 1px solid #2d2d2d;
 }
 
 .notion-main {
-  background: #1a1a1a;
+  background: #1e1e1e;
 }
 
 .notion-card {
@@ -89,7 +89,7 @@
 }
 
 .notion-text-muted {
-  color: #a0a0a0;
+  color: #86837e;
 }
 
 .notion-accent {
@@ -98,4 +98,18 @@
 
 .notion-hover:hover {
   background: #3d3d3d;
+}
+
+/* Typography */
+body {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.2pt;
+}
+
+/* Remove blue highlights */
+* {
+  --blue-500: #3d3d3d;
+  --blue-600: #4d4d4d;
+  --blue-700: #5d5d5d;
 }

@@ -29,33 +29,53 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-900">
+    <div className="flex h-screen" style={{ backgroundColor: "#1E1E1E" }}>
       <Sidebar />
 
       <div className="flex-1 flex flex-col lg:ml-0">
         {/* Top Bar */}
-        <div className="bg-gray-800 px-4 lg:px-6 py-4">
+        <div
+          className="px-4 lg:px-6 py-4"
+          style={{ backgroundColor: "#2C2C2B" }}
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">
-              <Sparkles className="w-4 h-4 lg:w-5 lg:h-5 text-gray-400 flex-shrink-0" />
-              <span className="text-gray-300 text-sm lg:text-base truncate">
+              <Sparkles
+                className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0"
+                style={{ color: "#86837E" }}
+              />
+              <span
+                className="text-sm lg:text-base truncate"
+                style={{ color: "#86837E" }}
+              >
                 dashboard / breadcrumb...
               </span>
-              <span className="text-gray-500 hidden lg:inline">/</span>
-              <span className="text-white text-sm lg:text-base truncate">
+              <span className="hidden lg:inline" style={{ color: "#86837E" }}>
+                /
+              </span>
+              <span
+                className="text-sm lg:text-base truncate"
+                style={{ color: "#e5e5e5" }}
+              >
                 Freelance Projects
               </span>
             </div>
 
             <div className="flex items-center gap-2 lg:gap-4 flex-shrink-0">
-              <span className="text-xs lg:text-sm text-gray-400 hidden sm:inline">
+              <span
+                className="text-xs lg:text-sm hidden sm:inline"
+                style={{ color: "#86837E" }}
+              >
                 Edited just now
               </span>
-              <button className="flex items-center gap-1 lg:gap-2 px-2 lg:px-3 py-1 text-gray-400 hover:text-white">
+              <button
+                className="flex items-center gap-1 lg:gap-2 px-2 lg:px-3 py-1 hover:opacity-80"
+                style={{ color: "#86837E" }}
+              >
                 <Share className="w-3 h-3 lg:w-4 lg:h-4" />
                 <span className="hidden lg:inline">Share</span>
               </button>
-              <button className="text-gray-400 hover:text-yellow-400">
+              <button className="hover:opacity-80" style={{ color: "#86837E" }}>
                 <Star className="w-3 h-3 lg:w-4 lg:h-4" />
               </button>
             </div>
@@ -68,8 +88,9 @@ export default function DashboardPage() {
         {/* Floating Action Button */}
         <motion.button
           onClick={handleAddProject}
-          className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6 w-12 h-12 lg:w-14 lg:h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center z-40"
-          whileHover={{ scale: 1.1 }}
+          className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6 w-12 h-12 lg:w-14 lg:h-14 text-white rounded-full shadow-lg flex items-center justify-center z-40"
+          style={{ backgroundColor: "#3d3d3d" }}
+          whileHover={{ scale: 1.1, backgroundColor: "#4d4d4d" }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
