@@ -75,7 +75,7 @@ export default function Dashboard() {
                     To-do
                   </h3>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-1.5">
                   {todoProjects.map((project) => (
                     <motion.div
                       key={project.id}
@@ -144,7 +144,7 @@ export default function Dashboard() {
                     In progress
                   </h3>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-1.5">
                   {inProgressProjects.map((project) => (
                     <motion.div
                       key={project.id}
@@ -219,7 +219,7 @@ export default function Dashboard() {
                     Complete
                   </h3>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-1.5">
                   {completeProjects.map((project) => (
                     <motion.div
                       key={project.id}
@@ -279,17 +279,151 @@ export default function Dashboard() {
         );
       case "All Projects":
         return (
-          <div className="p-6">
-            <h2
-              className="text-xl font-semibold mb-4"
-              style={{ color: "#e5e5e5" }}
-            >
-              All Projects
-            </h2>
-            <p className="text-sm" style={{ color: "#86837E" }}>
-              View and manage all your freelance projects in a comprehensive
-              list.
-            </p>
+          <div>
+            <div className="overflow-hidden">
+              {/* Table Header */}
+              <div className="px-4 py-3 border-b border-[#3d3d3d]">
+                <div
+                  className="grid grid-cols-5 gap-4 text-sm font-medium"
+                  style={{ color: "#86837E" }}
+                >
+                  <div className="flex items-center gap-2 cursor-pointer hover:text-[#e5e5e5] transition-colors border-r border-[#3d3d3d] pr-4">
+                    <span>Project Name</span>
+                    <ArrowUpDown className="w-3 h-3" />
+                  </div>
+                  <div className="flex items-center gap-2 border-r border-[#3d3d3d] pr-4">
+                    <span>Client</span>
+                  </div>
+                  <div className="flex items-center gap-2 border-r border-[#3d3d3d] pr-4">
+                    <span>Status</span>
+                  </div>
+                  <div className="flex items-center gap-2 border-r border-[#3d3d3d] pr-4">
+                    <span>Deadline</span>
+                  </div>
+                  <div className="flex items-center gap-2 cursor-pointer hover:text-[#e5e5e5] transition-colors">
+                    <span>Priority</span>
+                    <ArrowUpDown className="w-3 h-3" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Table Body */}
+              <div className="divide-y divide-[#3d3d3d]">
+                {projects.map((project) => (
+                  <div
+                    key={project.id}
+                    className="px-4 py-3 hover:bg-[#2d2d2d] transition-colors"
+                  >
+                    <div className="grid grid-cols-5 gap-4 items-center">
+                      {/* Project Name */}
+                      <div className="flex items-center gap-3 border-r border-[#3d3d3d] pr-4">
+                        <CheckSquare
+                          className="w-4 h-4"
+                          style={{ color: "#86837E" }}
+                        />
+                        <span className="text-sm" style={{ color: "#e5e5e5" }}>
+                          {project.name}
+                        </span>
+                      </div>
+
+                      {/* Client */}
+                      <div className="border-r border-[#3d3d3d] pr-4">
+                        <span
+                          className={`px-2 py-1 text-xs ${
+                            getClientTypeColor(project.clientType) === "#FBF3DA"
+                              ? "text-black"
+                              : "text-white"
+                          }`}
+                          style={{
+                            backgroundColor: getClientTypeColor(
+                              project.clientType
+                            ),
+                            borderRadius: "4px",
+                          }}
+                        >
+                          {project.clientType}
+                        </span>
+                      </div>
+
+                      {/* Status */}
+                      <div className="border-r border-[#3d3d3d] pr-4">
+                        <span
+                          className={`px-2 py-1 text-xs w-fit`}
+                          style={{
+                            backgroundColor:
+                              project.status === "Completed"
+                                ? "#10b981"
+                                : project.status === "In Progress"
+                                ? "#3b82f6"
+                                : project.status === "Review"
+                                ? "#f59e0b"
+                                : project.status === "On Hold"
+                                ? "#ef4444"
+                                : "#6b7280",
+                            borderRadius: "4px",
+                            color: "white",
+                          }}
+                        >
+                          {project.status}
+                        </span>
+                      </div>
+
+                      {/* Deadline */}
+                      <div className="border-r border-[#3d3d3d] pr-4">
+                        <span className="text-sm" style={{ color: "#86837E" }}>
+                          {new Date(project.deadline).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          )}
+                        </span>
+                      </div>
+
+                      {/* Priority */}
+                      <div>
+                        <span
+                          className={`px-2 py-1 text-xs ${
+                            project.priority === "High"
+                              ? "text-white"
+                              : project.priority === "Medium"
+                              ? "text-white"
+                              : project.priority === "Low"
+                              ? "text-white"
+                              : "text-white"
+                          }`}
+                          style={{
+                            backgroundColor:
+                              project.priority === "High"
+                                ? "#ef4444"
+                                : project.priority === "Medium"
+                                ? "#f59e0b"
+                                : project.priority === "Low"
+                                ? "#10b981"
+                                : "#8b5cf6",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          {project.priority}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Add New Item */}
+              <div className="px-4 py-3 border-t border-[#3d3d3d]">
+                <button
+                  className="text-sm hover:text-[#e5e5e5] transition-colors"
+                  style={{ color: "#86837E" }}
+                >
+                  <span>+ New item</span>
+                </button>
+              </div>
+            </div>
           </div>
         );
       case "Chart":
