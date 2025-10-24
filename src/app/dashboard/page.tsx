@@ -246,8 +246,8 @@ export default function DashboardPage() {
                       key={project.id}
                       className="p-4 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors cursor-pointer"
                       style={{ borderRadius: "12px" }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ opacity: 0.8 }}
+                      whileTap={{ opacity: 0.9 }}
                     >
                       <h4
                         className="text-sm font-medium mb-2"
@@ -314,8 +314,8 @@ export default function DashboardPage() {
                         backgroundColor: "#1E2A39",
                         borderRadius: "12px",
                       }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ opacity: 0.8 }}
+                      whileTap={{ opacity: 0.9 }}
                     >
                       <h4
                         className="text-sm font-medium mb-2"
@@ -385,8 +385,8 @@ export default function DashboardPage() {
                         backgroundColor: "#212E26",
                         borderRadius: "12px",
                       }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ opacity: 0.8 }}
+                      whileTap={{ opacity: 0.9 }}
                     >
                       <h4
                         className="text-sm font-medium mb-2"
