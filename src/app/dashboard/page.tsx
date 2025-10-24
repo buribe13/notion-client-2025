@@ -391,7 +391,10 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-xs lg:text-sm" style={{ color: "#86837E" }}>
-                dashboard / breadcrumb / Freelance Projects
+                dashboard / breadcrumb ... /{" "}
+              </span>
+              <span className="text-xs lg:text-sm" style={{ color: "#e5e5e5" }}>
+                Freelance Projects
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -404,7 +407,7 @@ export default function Dashboard() {
                   style={{ color: "#86837E" }}
                 />
               </button>
-              <button className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors">
+              <button className="flex items-center gap-2 px-3 py-2 text-[#e5e5e5] hover:text-[#e5e5e5] transition-colors">
                 <Share className="w-4 h-4" />
                 <span className="text-sm">Share</span>
               </button>
@@ -497,19 +500,11 @@ export default function Dashboard() {
             </button>
 
             <div className="flex items-center gap-2 ml-auto">
-              <button
-                className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors"
-                style={{ borderRadius: "50px" }}
-              >
-                <Filter className="w-4 h-4" />
-                <span className="text-sm">Filter</span>
+              <button className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors">
+                <Filter className="w-4 h-4" style={{ color: "#86837E" }} />
               </button>
-              <button
-                className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors"
-                style={{ borderRadius: "50px" }}
-              >
-                <ArrowUpDown className="w-4 h-4" />
-                <span className="text-sm">Sort</span>
+              <button className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors">
+                <ArrowUpDown className="w-4 h-4" style={{ color: "#86837E" }} />
               </button>
               <button
                 className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
