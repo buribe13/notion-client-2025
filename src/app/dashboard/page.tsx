@@ -629,7 +629,14 @@ export default function Dashboard() {
         return (
           <div className="px-24 pb-8 flex justify-center">
             <div className="w-[600px]">
-              <div className="flex items-center justify-end mb-3">
+              <div className="flex items-center justify-between mb-1">
+                <button
+                  className="text-sm hover:text-[#e5e5e5] transition-colors px-2 py-1 rounded"
+                  style={{ color: "#86837E" }}
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                >
+                  Filter by Client
+                </button>
                 <button
                   className="p-2 hover:opacity-70 transition-opacity rounded"
                   onClick={() => {
@@ -1286,8 +1293,8 @@ export default function Dashboard() {
 
               {/* Filter Overlay */}
               {isFilterOpen && (
-                <div className="absolute top-12 right-0 bg-black/60 backdrop-blur-sm rounded-lg shadow-lg z-10 min-w-[250px]">
-                  <div className="p-3">
+                <div className="absolute top-12 right-0 bg-black/60 backdrop-blur-sm rounded-xl shadow-lg z-10 min-w-[250px]">
+                  <div className="px-6 py-6">
                     <div className="flex items-center justify-between mb-3">
                       <div
                         className="text-xs font-medium"
@@ -1296,7 +1303,7 @@ export default function Dashboard() {
                         Filter by Person
                       </div>
                       <button
-                        className="text-xs hover:text-[#e5e5e5] transition-colors"
+                        className="text-base hover:text-[#e5e5e5] transition-colors"
                         style={{ color: "#86837E" }}
                         onClick={() => setIsFilterOpen(false)}
                       >
@@ -1304,24 +1311,28 @@ export default function Dashboard() {
                       </button>
                     </div>
                     <div className="space-y-2">
-                      <button
-                        className={`w-full text-left px-2 py-1 text-xs rounded transition-colors ${
-                          selectedClient === null
-                            ? "bg-[#0C6E99] text-white"
-                            : "hover:bg-[#3d3d3d] text-[#e5e5e5]"
-                        }`}
-                        onClick={() => {
-                          setSelectedClient(null);
-                          setIsFilterOpen(false);
-                        }}
-                      >
-                        All People
-                      </button>
                       <div className="flex flex-wrap gap-2">
+                        <button
+                          className={`px-2 py-1 text-xs rounded-full transition-colors ${
+                            selectedClient === null
+                              ? "opacity-100"
+                              : "opacity-70 hover:opacity-100"
+                          }`}
+                          style={{
+                            backgroundColor: "#6b7280",
+                            color: "white",
+                          }}
+                          onClick={() => {
+                            setSelectedClient(null);
+                            setIsFilterOpen(false);
+                          }}
+                        >
+                          All People
+                        </button>
                         {allPeople.map((person) => (
                           <button
                             key={person}
-                            className={`px-2 py-1 text-xs rounded transition-colors ${
+                            className={`px-2 py-1 text-xs rounded-full transition-colors ${
                               selectedClient === person
                                 ? "opacity-100"
                                 : "opacity-70 hover:opacity-100"
