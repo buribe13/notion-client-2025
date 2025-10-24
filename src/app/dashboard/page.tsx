@@ -37,6 +37,8 @@ export default function Dashboard() {
   } = useDashboardStore();
 
   const [activeTab, setActiveTab] = useState("Project Board");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<string | null>(null);
 
   const projects = getFilteredProjects();
 
@@ -54,6 +56,98 @@ export default function Dashboard() {
   const todoProjects = projects.filter((p) => p.status === "Not Started");
   const inProgressProjects = projects.filter((p) => p.status === "In Progress");
   const completeProjects = projects.filter((p) => p.status === "Completed");
+
+  // Feed data and filtering
+  const feedPosts = [
+    {
+      id: 1,
+      author: "Benjamin Uribe",
+      project: "Marketing Collateral",
+      client: "Sarah Johnson",
+      time: "5h ago",
+      content:
+        "Just finished the initial mockups for the new marketing campaign. Looking for feedback on the color scheme and overall direction. The client wants something that feels modern but approachable.",
+    },
+    {
+      id: 2,
+      author: "Alex Chen",
+      project: "App UI/UX Redesign",
+      client: "TechStart",
+      time: "8h ago",
+      content:
+        "Need some input on the user flow for the onboarding process. Should we go with a step-by-step wizard or a single-page form? Each has its pros and cons.",
+    },
+    {
+      id: 3,
+      author: "Maria Rodriguez",
+      project: "Content Strategy",
+      client: "Acme Corp",
+      time: "1d ago",
+      content:
+        "Content calendar is ready for Q1! We're focusing on thought leadership pieces and case studies. Any suggestions for topics that would resonate with our target audience?",
+    },
+    {
+      id: 4,
+      author: "David Kim",
+      project: "E-commerce Website",
+      client: "Sarah Johnson",
+      time: "2d ago",
+      content:
+        "Performance optimization complete! Page load times improved by 40%. The new caching strategy is working really well.",
+    },
+    {
+      id: 5,
+      author: "Lisa Thompson",
+      project: "Product Launch Campaign",
+      client: "TechStart",
+      time: "3d ago",
+      content:
+        "Launch day is approaching! All assets are ready and the team is excited. Let's make sure we're all aligned on the rollout timeline.",
+    },
+  ];
+
+  // All team members and clients for filtering
+  const allPeople = [
+    "Benjamin Uribe",
+    "Alex Chen",
+    "Maria Rodriguez",
+    "David Kim",
+    "Lisa Thompson",
+    "Sarah Johnson",
+    "TechStart",
+    "Acme Corp",
+  ];
+
+  const getPersonColor = (person: string) => {
+    switch (person) {
+      case "Benjamin Uribe":
+        return "#0C6E99"; // Blue
+      case "Alex Chen":
+        return "#0E7B6C"; // Green
+      case "Maria Rodriguez":
+        return "#E03D3E"; // Red
+      case "David Kim":
+        return "#f59e0b"; // Amber
+      case "Lisa Thompson":
+        return "#8b5cf6"; // Purple
+      case "Sarah Johnson":
+        return "#10b981"; // Emerald
+      case "TechStart":
+        return "#06b6d4"; // Cyan
+      case "Acme Corp":
+        return "#f97316"; // Orange
+      default:
+        return "#6b7280"; // Gray
+    }
+  };
+
+  const clients = Array.from(new Set(feedPosts.map((post) => post.client)));
+  const filteredFeedPosts = selectedClient
+    ? feedPosts.filter(
+        (post) =>
+          post.client === selectedClient || post.author === selectedClient
+      )
+    : feedPosts;
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -1176,8 +1270,11 @@ export default function Dashboard() {
               <span className="text-sm">Timeline</span>
             </button>
 
-            <div className="flex items-center gap-2 ml-auto">
-              <button className="p-2 hover:opacity-70 transition-opacity rounded">
+            <div className="flex items-center gap-2 ml-auto relative">
+              <button
+                className="p-2 hover:opacity-70 transition-opacity rounded"
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
+              >
                 <Filter className="w-4 h-4" style={{ color: "#86837E" }} />
               </button>
               <button className="p-2 hover:opacity-70 transition-opacity rounded">
@@ -1186,6 +1283,66 @@ export default function Dashboard() {
               <button className="p-2 hover:opacity-70 transition-opacity rounded">
                 <Search className="w-4 h-4" style={{ color: "#86837E" }} />
               </button>
+
+              {/* Filter Overlay */}
+              {isFilterOpen && (
+                <div className="absolute top-12 right-0 bg-black/60 backdrop-blur-sm rounded-lg shadow-lg z-10 min-w-[250px]">
+                  <div className="p-3">
+                    <div className="flex items-center justify-between mb-3">
+                      <div
+                        className="text-xs font-medium"
+                        style={{ color: "#86837E" }}
+                      >
+                        Filter by Person
+                      </div>
+                      <button
+                        className="text-xs hover:text-[#e5e5e5] transition-colors"
+                        style={{ color: "#86837E" }}
+                        onClick={() => setIsFilterOpen(false)}
+                      >
+                        ×
+                      </button>
+                    </div>
+                    <div className="space-y-2">
+                      <button
+                        className={`w-full text-left px-2 py-1 text-xs rounded transition-colors ${
+                          selectedClient === null
+                            ? "bg-[#0C6E99] text-white"
+                            : "hover:bg-[#3d3d3d] text-[#e5e5e5]"
+                        }`}
+                        onClick={() => {
+                          setSelectedClient(null);
+                          setIsFilterOpen(false);
+                        }}
+                      >
+                        All People
+                      </button>
+                      <div className="flex flex-wrap gap-2">
+                        {allPeople.map((person) => (
+                          <button
+                            key={person}
+                            className={`px-2 py-1 text-xs rounded transition-colors ${
+                              selectedClient === person
+                                ? "opacity-100"
+                                : "opacity-70 hover:opacity-100"
+                            }`}
+                            style={{
+                              backgroundColor: getPersonColor(person),
+                              color: "white",
+                            }}
+                            onClick={() => {
+                              setSelectedClient(person);
+                              setIsFilterOpen(false);
+                            }}
+                          >
+                            {person}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               <button
                 className="flex items-center gap-2 px-3 py-2 text-white hover:opacity-80 transition-opacity"
                 style={{ borderRadius: "50px", backgroundColor: "#0C6E99" }}
