@@ -121,7 +121,7 @@ export function ProjectTable({ projects }: ProjectTableProps) {
       <div className="notion-card rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[800px]">
-            <thead className="bg-gray-800 border-b border-gray-700">
+            <thead className="bg-gray-800">
               <tr>
                 <th
                   className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300 cursor-pointer hover:text-white"
@@ -210,7 +210,7 @@ export function ProjectTable({ projects }: ProjectTableProps) {
               {projects.map((project, index) => (
                 <motion.tr
                   key={project.id}
-                  className="border-b border-gray-700 hover:bg-gray-800/50 transition-colors"
+                  className="hover:bg-gray-800/50 transition-colors"
                   onMouseEnter={() => setHoveredRow(project.id)}
                   onMouseLeave={() => setHoveredRow(null)}
                   initial={{ opacity: 0, y: 20 }}
@@ -292,7 +292,7 @@ export function ProjectTable({ projects }: ProjectTableProps) {
         </div>
 
         {/* Add New Item Row */}
-        <div className="p-2 lg:p-4 border-t border-gray-700">
+        <div className="p-2 lg:p-4">
           <button className="flex items-center gap-2 text-gray-400 hover:text-white text-xs lg:text-sm">
             <Plus className="w-3 h-3 lg:w-4 lg:h-4" />
             <span className="hidden sm:inline">New item</span>

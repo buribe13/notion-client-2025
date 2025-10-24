@@ -34,7 +34,7 @@ export default function DashboardPage() {
 
       <div className="flex-1 flex flex-col lg:ml-0">
         {/* Top Bar */}
-        <div className="bg-gray-800 border-b border-gray-700 px-4 lg:px-6 py-4">
+        <div className="bg-gray-800 px-4 lg:px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">
               <Sparkles className="w-4 h-4 lg:w-5 lg:h-5 text-gray-400 flex-shrink-0" />

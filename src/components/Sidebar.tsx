@@ -65,7 +65,7 @@ export function Sidebar() {
         )}
       >
         {/* Header */}
-        <div className="p-4 border-b border-gray-700">
+        <div className="p-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <span className="font-semibold">benjamin's Notion</span>
@@ -226,7 +226,7 @@ export function Sidebar() {
         </AnimatePresence>
 
         {/* Bottom User Section */}
-        <div className="p-4 border-t border-gray-700 flex items-center gap-3">
+        <div className="p-4 flex items-center gap-3">
           <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
             <User className="w-4 h-4" />
           </div>
