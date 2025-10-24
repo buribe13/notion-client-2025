@@ -357,13 +357,13 @@ export default function Dashboard() {
                           style={{
                             backgroundColor:
                               project.status === "Completed"
-                                ? "#10b981"
+                                ? "#0E7B6C"
                                 : project.status === "In Progress"
-                                ? "#3b82f6"
+                                ? "#0C6E99"
                                 : project.status === "Review"
                                 ? "#f59e0b"
                                 : project.status === "On Hold"
-                                ? "#ef4444"
+                                ? "#E03D3E"
                                 : "#6b7280",
                             borderRadius: "4px",
                             color: "white",
@@ -478,13 +478,13 @@ export default function Dashboard() {
                       style={{
                         backgroundColor:
                           project.status === "Completed"
-                            ? "#10b981"
+                            ? "#0E7B6C"
                             : project.status === "In Progress"
-                            ? "#3b82f6"
+                            ? "#0C6E99"
                             : project.status === "Review"
                             ? "#f59e0b"
                             : project.status === "On Hold"
-                            ? "#ef4444"
+                            ? "#E03D3E"
                             : "#6b7280",
                         borderRadius: "4px",
                         color: "white",
@@ -1177,21 +1177,18 @@ export default function Dashboard() {
             </button>
 
             <div className="flex items-center gap-2 ml-auto">
-              <button className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors">
+              <button className="p-2 hover:opacity-70 transition-opacity rounded">
                 <Filter className="w-4 h-4" style={{ color: "#86837E" }} />
               </button>
-              <button className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors">
+              <button className="p-2 hover:opacity-70 transition-opacity rounded">
                 <ArrowUpDown className="w-4 h-4" style={{ color: "#86837E" }} />
               </button>
-              <button
-                className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors"
-                style={{ borderRadius: "50px" }}
-              >
+              <button className="p-2 hover:opacity-70 transition-opacity rounded">
                 <Search className="w-4 h-4" style={{ color: "#86837E" }} />
               </button>
               <button
-                className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5] hover:bg-[#4d4d4d] transition-colors"
-                style={{ borderRadius: "50px" }}
+                className="flex items-center gap-2 px-3 py-2 text-white hover:opacity-80 transition-opacity"
+                style={{ borderRadius: "50px", backgroundColor: "#0C6E99" }}
                 onClick={handleAddProject}
               >
                 <Plus className="w-4 h-4" />
