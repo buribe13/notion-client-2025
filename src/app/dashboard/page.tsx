@@ -128,8 +128,8 @@ export default function DashboardPage() {
         </div>
 
         {/* Page Title */}
-        <div className="px-12 py-4">
-          <div className="flex items-center gap-3 mb-6">
+        <div className="px-24 pt-12 pb-2">
+          <div className="flex items-center gap-3 mb-2">
             <CheckSquare className="w-6 h-6" style={{ color: "#e5e5e5" }} />
             <h1 className="text-2xl font-semibold" style={{ color: "#e5e5e5" }}>
               Freelance Projects
@@ -137,7 +137,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Sub-menu Tabs */}
-          <div className="flex items-center gap-1 mb-6">
+          <div className="flex items-center gap-1 mb-2">
             <button
               className="flex items-center gap-2 px-3 py-2 bg-[#3d3d3d] text-[#e5e5e5]"
               style={{ borderRadius: "50px" }}
@@ -223,7 +223,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Kanban Board */}
-        <div className="flex-1 px-12 pb-4 overflow-x-auto">
+        <div className="flex-1 px-24 pb-8 overflow-x-auto">
           <div className="flex gap-4 h-full">
             {/* To-do Column */}
             <div className="w-[300px] flex-shrink-0">
