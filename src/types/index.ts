@@ -17,7 +17,7 @@ export type ClientType =
 export interface Project {
   id: string;
   name: string;
-  client: ClientType;
+  clientType: ClientType;
   status: ProjectStatus;
   deadline: string;
   priority: ProjectPriority;
@@ -31,7 +31,7 @@ export interface Project {
 export interface ProjectFilters {
   status?: ProjectStatus[];
   priority?: ProjectPriority[];
-  client?: ClientType[];
+  clientType?: ClientType[];
 }
 
 export interface ProjectSort {

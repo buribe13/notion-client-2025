@@ -84,7 +84,9 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
       filtered = filtered.filter(
         (project) =>
           project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          project.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          project.clientType
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
           project.description?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
@@ -103,10 +105,10 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
       );
     }
 
-    // Apply client filter
-    if (filters.client && filters.client.length > 0) {
+    // Apply clientType filter
+    if (filters.clientType && filters.clientType.length > 0) {
       filtered = filtered.filter((project) =>
-        filters.client!.includes(project.client)
+        filters.clientType!.includes(project.clientType)
       );
     }
 

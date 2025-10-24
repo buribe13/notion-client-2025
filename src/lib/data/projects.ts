@@ -4,7 +4,7 @@ export const mockProjects: Project[] = [
   {
     id: "1",
     name: "Annual Report Design",
-    client: "Non-profit",
+    clientType: "Non-profit",
     status: "Completed",
     deadline: "2025-10-15",
     priority: "Medium",
@@ -18,7 +18,7 @@ export const mockProjects: Project[] = [
   {
     id: "2",
     name: "E-commerce Website",
-    client: "Startup",
+    clientType: "Startup",
     status: "In Progress",
     deadline: "2025-11-30",
     priority: "High",
@@ -32,7 +32,7 @@ export const mockProjects: Project[] = [
   {
     id: "3",
     name: "Brand Identity Package",
-    client: "Individual",
+    clientType: "Individual",
     status: "Review",
     deadline: "2025-10-25",
     priority: "Medium",
@@ -46,7 +46,7 @@ export const mockProjects: Project[] = [
   {
     id: "4",
     name: "Mobile App UI/UX",
-    client: "Enterprise",
+    clientType: "Enterprise",
     status: "In Progress",
     deadline: "2025-12-15",
     priority: "Urgent",
@@ -59,7 +59,7 @@ export const mockProjects: Project[] = [
   {
     id: "5",
     name: "Marketing Campaign",
-    client: "Regular Client",
+    clientType: "Regular Client",
     status: "On Hold",
     deadline: "2025-11-10",
     priority: "Low",
@@ -72,7 +72,7 @@ export const mockProjects: Project[] = [
   {
     id: "6",
     name: "Website Redesign",
-    client: "International",
+    clientType: "International",
     status: "Not Started",
     deadline: "2025-12-30",
     priority: "Medium",
@@ -85,7 +85,7 @@ export const mockProjects: Project[] = [
   {
     id: "7",
     name: "Product Photography",
-    client: "New Client",
+    clientType: "New Client",
     status: "In Progress",
     deadline: "2025-11-05",
     priority: "High",
@@ -98,7 +98,7 @@ export const mockProjects: Project[] = [
   {
     id: "8",
     name: "Presentation Design",
-    client: "Startup",
+    clientType: "Startup",
     status: "Completed",
     deadline: "2025-10-10",
     priority: "Low",

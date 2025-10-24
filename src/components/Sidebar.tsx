@@ -314,19 +314,18 @@ export function Sidebar() {
         </AnimatePresence>
 
         {/* Bottom User Section */}
-        <div className="p-2 flex items-center gap-3">
-          <div className="flex-1">
-            <div className="text-sm font-medium" style={{ color: "#e5e5e5" }}>
-              Benjamin Uribe
+        <div className="p-2">
+          <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+            <div className="flex-1">
+              <div className="text-sm font-medium" style={{ color: "#e5e5e5" }}>
+                Benjamin Uribe
+              </div>
+              <div className="text-xs" style={{ color: "#86837E" }}>
+                Free plan
+              </div>
             </div>
-            <div className="text-xs" style={{ color: "#86837E" }}>
-              Free plan
-            </div>
+            <Send className="w-4 h-4" style={{ color: "#86837E" }} />
           </div>
-          <Send
-            className="w-4 h-4 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors"
-            style={{ color: "#86837E" }}
-          />
         </div>
       </div>
     </>

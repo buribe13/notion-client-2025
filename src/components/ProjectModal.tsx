@@ -17,7 +17,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
   const { addProject, updateProject } = useDashboardStore();
   const [formData, setFormData] = useState({
     name: "",
-    client: "Individual" as ClientType,
+    clientType: "Individual" as ClientType,
     status: "Not Started" as ProjectStatus,
     deadline: "",
     priority: "Medium" as ProjectPriority,
@@ -30,7 +30,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
     if (project) {
       setFormData({
         name: project.name,
-        client: project.client,
+        clientType: project.clientType,
         status: project.status,
         deadline: project.deadline,
         priority: project.priority,
@@ -41,7 +41,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
     } else {
       setFormData({
         name: "",
-        client: "Individual",
+        clientType: "Individual",
         status: "Not Started",
         deadline: "",
         priority: "Medium",
@@ -57,7 +57,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 
     const projectData: Omit<Project, "id" | "createdAt" | "updatedAt"> = {
       name: formData.name,
-      client: formData.client,
+      clientType: formData.clientType,
       status: formData.status,
       deadline: formData.deadline,
       priority: formData.priority,
@@ -134,11 +134,11 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     Client Type
                   </label>
                   <select
-                    value={formData.client}
+                    value={formData.clientType}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        client: e.target.value as ClientType,
+                        clientType: e.target.value as ClientType,
                       })
                     }
                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"

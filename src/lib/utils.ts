@@ -49,19 +49,16 @@ export function getPriorityColor(priority: string): string {
 
 export function getClientColor(client: string): string {
   const colors = {
-    Individual:
-      "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
-    Startup:
-      "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-    "Non-profit":
-      "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
-    Enterprise:
-      "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-    International: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
-    "Regular Client":
-      "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
-    "New Client":
-      "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
+    "Acme Corp": "text-white", // Notion Red Regular #E03D3E
+    TechStart: "text-white", // Notion Blue Regular #0C6E99
+    "Sarah Johnson": "text-white", // Notion Green Regular #0E7B6C
+    Individual: "text-white", // Notion Orange Regular #D9730B
+    Startup: "text-white", // Notion Purple Regular #693FA5
+    "Non-profit": "text-white", // Notion Green Regular #0E7B6C
+    Enterprise: "text-white", // Notion Purple Regular #693FA5
+    International: "text-white", // Notion Red Regular #E03D3E
+    "Regular Client": "text-white", // Notion Green Regular #0E7B6C
+    "New Client": "text-white", // Notion Blue Regular #0C6E99
   };
-  return colors[client as keyof typeof colors] || "bg-gray-100 text-gray-800";
+  return colors[client as keyof typeof colors] || "text-white";
 }

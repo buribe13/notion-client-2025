@@ -136,13 +136,13 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                 </th>
                 <th
                   className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300 cursor-pointer hover:text-white"
-                  onClick={() => handleSort("client")}
+                  onClick={() => handleSort("clientType")}
                 >
                   <div className="flex items-center gap-1 lg:gap-2">
                     <span className="text-xs lg:text-sm">👤</span>
                     <span className="hidden sm:inline">Client</span>
                     <span className="sm:hidden">Client</span>
-                    <SortIcon field="client" />
+                    <SortIcon field="clientType" />
                   </div>
                 </th>
                 <th
@@ -226,10 +226,10 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                     <span
                       className={cn(
                         "px-1 lg:px-2 py-1 rounded-full text-xs font-medium",
-                        getClientColor(project.client)
+                        getClientColor(project.clientType)
                       )}
                     >
-                      {project.client}
+                      {project.clientType}
                     </span>
                   </td>
                   <td className="p-2 lg:p-4">

@@ -52,22 +52,28 @@ export default function DashboardPage() {
 
   const getClientTypeColor = (clientType: string) => {
     switch (clientType) {
+      case "Acme Corp":
+        return "#E03D3E"; // Notion Red Regular
+      case "TechStart":
+        return "#DFAB00"; // Notion Yellow Regular
+      case "Sarah Johnson":
+        return "#FBF3DA"; // Notion Yellow Light
       case "Regular Client":
-        return "bg-green-500";
+        return "#E03D3E"; // Notion Red Regular
       case "International":
-        return "bg-red-500";
+        return "#DFAB00"; // Notion Yellow Regular
       case "New Client":
-        return "bg-blue-400";
+        return "#FBF3DA"; // Notion Yellow Light
       case "Individual":
-        return "bg-orange-500";
+        return "#E03D3E"; // Notion Red Regular
       case "Startup":
-        return "bg-orange-500";
+        return "#DFAB00"; // Notion Yellow Regular
       case "Enterprise":
-        return "bg-purple-500";
+        return "#FBF3DA"; // Notion Yellow Light
       case "Non-profit":
-        return "bg-green-400";
+        return "#E03D3E"; // Notion Red Regular
       default:
-        return "bg-gray-500";
+        return "#878682"; // Notion Gray Regular
     }
   };
 
@@ -249,11 +255,19 @@ export default function DashboardPage() {
                       >
                         {project.name}
                       </h4>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <span
-                          className={`px-2 py-1 rounded-full text-xs text-white ${getClientTypeColor(
-                            project.clientType
-                          )}`}
+                          className={`px-2 py-1 text-xs ${
+                            getClientTypeColor(project.clientType) === "#FBF3DA"
+                              ? "text-black"
+                              : "text-white"
+                          }`}
+                          style={{
+                            backgroundColor: getClientTypeColor(
+                              project.clientType
+                            ),
+                            borderRadius: "4px",
+                          }}
                         >
                           {project.clientType}
                         </span>
@@ -309,11 +323,19 @@ export default function DashboardPage() {
                       >
                         {project.name}
                       </h4>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <span
-                          className={`px-2 py-1 rounded-full text-xs text-white ${getClientTypeColor(
-                            project.clientType
-                          )}`}
+                          className={`px-2 py-1 text-xs ${
+                            getClientTypeColor(project.clientType) === "#FBF3DA"
+                              ? "text-black"
+                              : "text-white"
+                          }`}
+                          style={{
+                            backgroundColor: getClientTypeColor(
+                              project.clientType
+                            ),
+                            borderRadius: "4px",
+                          }}
                         >
                           {project.clientType}
                         </span>
@@ -372,11 +394,19 @@ export default function DashboardPage() {
                       >
                         {project.name}
                       </h4>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <span
-                          className={`px-2 py-1 rounded-full text-xs text-white ${getClientTypeColor(
-                            project.clientType
-                          )}`}
+                          className={`px-2 py-1 text-xs ${
+                            getClientTypeColor(project.clientType) === "#FBF3DA"
+                              ? "text-black"
+                              : "text-white"
+                          }`}
+                          style={{
+                            backgroundColor: getClientTypeColor(
+                              project.clientType
+                            ),
+                            borderRadius: "4px",
+                          }}
                         >
                           {project.clientType}
                         </span>
