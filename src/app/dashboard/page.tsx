@@ -29,14 +29,14 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex h-screen" style={{ backgroundColor: "#1E1E1E" }}>
+    <div className="flex h-screen" style={{ backgroundColor: "#181818" }}>
       <Sidebar />
 
       <div className="flex-1 flex flex-col lg:ml-0">
         {/* Top Bar */}
         <div
           className="px-4 lg:px-6 py-4"
-          style={{ backgroundColor: "#2C2C2B" }}
+          style={{ backgroundColor: "#181818" }}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">

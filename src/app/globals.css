@@ -70,12 +70,12 @@
 
 /* Custom Notion-inspired styles */
 .notion-sidebar {
-  background: #2c2c2b;
+  background: #202020;
   border-right: 1px solid #2d2d2d;
 }
 
 .notion-main {
-  background: #1e1e1e;
+  background: #181818;
 }
 
 .notion-card {
