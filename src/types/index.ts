@@ -40,6 +40,17 @@ export interface ProjectSort {
 }
 
 export type ViewType = "table" | "board" | "calendar";
+export type ClientViewMode = "pro" | "client";
+
+export interface ClientUpdate {
+  id: string;
+  projectId: string;
+  author: string;
+  content: string;
+  timestamp: string;
+  isVisibleToClient: boolean;
+  isNewForClient: boolean;
+}
 
 export interface DashboardState {
   projects: Project[];
@@ -49,4 +60,6 @@ export interface DashboardState {
   searchQuery: string;
   selectedProject?: Project;
   isModalOpen: boolean;
+  clientViewMode: ClientViewMode;
+  clientUpdates: ClientUpdate[];
 }

@@ -5,6 +5,8 @@ import {
   ProjectSort,
   ViewType,
   DashboardState,
+  ClientViewMode,
+  ClientUpdate,
 } from "@/types";
 import { mockProjects } from "@/lib/data/projects";
 
@@ -20,9 +22,15 @@ interface DashboardStore extends DashboardState {
   setSearchQuery: (query: string) => void;
   setSelectedProject: (project?: Project) => void;
   setIsModalOpen: (isOpen: boolean) => void;
+  setClientViewMode: (mode: ClientViewMode) => void;
+  addClientUpdate: (update: ClientUpdate) => void;
+  markUpdateAsVisibleToClient: (updateId: string) => void;
+  markClientUpdatesAsViewed: () => void;
 
   // Computed
   getFilteredProjects: () => Project[];
+  getClientVisibleUpdates: () => ClientUpdate[];
+  getNewClientUpdatesCount: () => number;
 }
 
 export const useDashboardStore = create<DashboardStore>((set, get) => ({
@@ -34,6 +42,39 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
   searchQuery: "",
   selectedProject: undefined,
   isModalOpen: false,
+  clientViewMode: "pro",
+  clientUpdates: [
+    {
+      id: "1",
+      projectId: "1",
+      author: "Benjamin Uribe",
+      content:
+        "Initial mockups completed for Marketing Collateral project. Looking for feedback on color scheme.",
+      timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+      isVisibleToClient: true,
+      isNewForClient: true,
+    },
+    {
+      id: "2",
+      projectId: "2",
+      author: "Alex Chen",
+      content:
+        "User flow design completed for App UI/UX Redesign. Ready for client review.",
+      timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
+      isVisibleToClient: true,
+      isNewForClient: false,
+    },
+    {
+      id: "3",
+      projectId: "3",
+      author: "Maria Rodriguez",
+      content:
+        "Q1 content calendar finalized. Focus on thought leadership and case studies.",
+      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+      isVisibleToClient: false,
+      isNewForClient: false,
+    },
+  ],
 
   // Actions
   setProjects: (projects) => set({ projects }),
@@ -72,6 +113,28 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
   setSelectedProject: (selectedProject) => set({ selectedProject }),
 
   setIsModalOpen: (isModalOpen) => set({ isModalOpen }),
+
+  setClientViewMode: (clientViewMode) => set({ clientViewMode }),
+
+  addClientUpdate: (update) =>
+    set((state) => ({
+      clientUpdates: [...state.clientUpdates, update],
+    })),
+
+  markUpdateAsVisibleToClient: (updateId) =>
+    set((state) => ({
+      clientUpdates: state.clientUpdates.map((update) =>
+        update.id === updateId ? { ...update, isVisibleToClient: true } : update
+      ),
+    })),
+
+  markClientUpdatesAsViewed: () =>
+    set((state) => ({
+      clientUpdates: state.clientUpdates.map((update) => ({
+        ...update,
+        isNewForClient: false,
+      })),
+    })),
 
   // Computed
   getFilteredProjects: () => {
@@ -131,5 +194,17 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
     });
 
     return filtered;
+  },
+
+  getClientVisibleUpdates: () => {
+    const { clientUpdates } = get();
+    return clientUpdates.filter((update) => update.isVisibleToClient);
+  },
+
+  getNewClientUpdatesCount: () => {
+    const { clientUpdates } = get();
+    return clientUpdates.filter(
+      (update) => update.isVisibleToClient && update.isNewForClient
+    ).length;
   },
 }));
