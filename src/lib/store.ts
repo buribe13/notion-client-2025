@@ -7,8 +7,10 @@ import {
   DashboardState,
   ClientViewMode,
   ClientUpdate,
+  Invoice,
 } from "@/types";
 import { mockProjects } from "@/lib/data/projects";
+import { mockInvoices } from "@/lib/data/invoices";
 
 interface DashboardStore extends DashboardState {
   // Actions
@@ -31,11 +33,14 @@ interface DashboardStore extends DashboardState {
   getFilteredProjects: () => Project[];
   getClientVisibleUpdates: () => ClientUpdate[];
   getNewClientUpdatesCount: () => number;
+  getOverdueInvoices: () => Invoice[];
+  getUpcomingInvoices: () => Invoice[];
 }
 
 export const useDashboardStore = create<DashboardStore>((set, get) => ({
   // Initial state
   projects: mockProjects,
+  invoices: mockInvoices,
   filters: {},
   sort: { field: "name", direction: "asc" },
   view: "table",
@@ -206,5 +211,28 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
     return clientUpdates.filter(
       (update) => update.isVisibleToClient && update.isNewForClient
     ).length;
+  },
+
+  getOverdueInvoices: () => {
+    const { invoices } = get();
+    const today = new Date().toISOString().split("T")[0];
+    return invoices.filter(
+      (invoice) =>
+        invoice.status === "Overdue" ||
+        (invoice.status === "Sent" && invoice.dueDate < today)
+    );
+  },
+
+  getUpcomingInvoices: () => {
+    const { invoices } = get();
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+    return invoices.filter(
+      (invoice) =>
+        invoice.status === "Sent" &&
+        new Date(invoice.dueDate) >= today &&
+        new Date(invoice.dueDate) <= nextWeek
+    );
   },
 }));

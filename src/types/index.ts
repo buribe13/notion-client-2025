@@ -52,6 +52,30 @@ export interface ClientUpdate {
   isNewForClient: boolean;
 }
 
+export type InvoiceStatus = "Draft" | "Sent" | "Paid" | "Overdue" | "Cancelled";
+export type PaymentMethod =
+  | "Bank Transfer"
+  | "PayPal"
+  | "Stripe"
+  | "Check"
+  | "Cash";
+
+export interface Invoice {
+  id: string;
+  projectId: string;
+  projectName: string;
+  clientType: ClientType;
+  amount: number;
+  status: InvoiceStatus;
+  dueDate: string;
+  sentDate?: string;
+  paidDate?: string;
+  paymentMethod?: PaymentMethod;
+  description?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface DashboardState {
   projects: Project[];
   filters: ProjectFilters;
@@ -62,4 +86,5 @@ export interface DashboardState {
   isModalOpen: boolean;
   clientViewMode: ClientViewMode;
   clientUpdates: ClientUpdate[];
+  invoices: Invoice[];
 }

@@ -32,6 +32,9 @@ import {
   MessageCircle,
   Bell,
   Users,
+  DollarSign,
+  AlertTriangle,
+  CreditCard,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -46,6 +49,9 @@ export default function Dashboard() {
     getClientVisibleUpdates,
     getNewClientUpdatesCount,
     markClientUpdatesAsViewed,
+    getOverdueInvoices,
+    getUpcomingInvoices,
+    invoices,
   } = useDashboardStore();
 
   const [activeTab, setActiveTab] = useState("Project Board");
@@ -59,6 +65,38 @@ export default function Dashboard() {
     clientViewMode === "client" && selectedClient
       ? projects.filter((project) => project.clientType === selectedClient)
       : projects;
+
+  // Apply client filtering to invoices
+  const filteredInvoices = selectedClient
+    ? invoices.filter((invoice) => invoice.clientType === selectedClient)
+    : invoices;
+
+  // Filtered invoice helper functions
+  const getFilteredOverdueInvoices = () => {
+    const today = new Date().toISOString().split("T")[0];
+    return filteredInvoices.filter(
+      (invoice) =>
+        invoice.status === "Overdue" ||
+        (invoice.status === "Sent" && invoice.dueDate < today)
+    );
+  };
+
+  const getFilteredUpcomingInvoices = () => {
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+    return filteredInvoices.filter(
+      (invoice) =>
+        invoice.status === "Sent" &&
+        new Date(invoice.dueDate) >= today &&
+        new Date(invoice.dueDate) <= nextWeek
+    );
+  };
+
+  // Get unique client types from invoices
+  const availableClientTypes = Array.from(
+    new Set(invoices.map((invoice) => invoice.clientType))
+  );
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -187,19 +225,10 @@ export default function Dashboard() {
     switch (activeTab) {
       case "Project Board":
         return (
-          <div className="px-24 pb-8">
+          <div className="px-24 pb-8 max-w-[70%]">
             {clientViewMode === "client" ? (
               // Client View - Simplified Project Overview
               <div className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-semibold text-white mb-2">
-                    Your Projects Overview
-                  </h2>
-                  <p className="text-sm text-[#86837E]">
-                    A simplified view of all your active projects
-                  </p>
-                </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {filteredProjects.map((project) => (
                     <motion.div
@@ -512,7 +541,7 @@ export default function Dashboard() {
         );
       case "All Projects":
         return (
-          <div className="px-24 pb-8">
+          <div className="px-24 pb-8 max-w-[70%]">
             <div className="overflow-hidden">
               {/* Table Header */}
               <div className="px-4 py-3 border-b border-[#3d3d3d]">
@@ -661,19 +690,10 @@ export default function Dashboard() {
         );
       case "Chart":
         return (
-          <div className="px-24 pb-8">
+          <div className="px-24 pb-8 max-w-[70%]">
             {clientViewMode === "client" ? (
               // Client View - Progress Visualizations
               <div className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-semibold text-white mb-2">
-                    Project Progress Overview
-                  </h2>
-                  <p className="text-sm text-[#86837E]">
-                    Track the progress of all your projects at a glance
-                  </p>
-                </div>
-
                 {/* Progress Bars */}
                 <div className="space-y-6">
                   {filteredProjects.map((project) => {
@@ -814,7 +834,7 @@ export default function Dashboard() {
         );
       case "Client Progress View":
         return (
-          <div className="px-24 pb-8">
+          <div className="px-24 pb-8 max-w-[70%]">
             {clientViewMode === "client" ? (
               // Client View - Enhanced Visualizations
               <div className="space-y-8">
@@ -1164,20 +1184,11 @@ export default function Dashboard() {
         );
       case "Feed":
         return (
-          <div className="px-24 pb-8 flex justify-center">
+          <div className="px-24 pb-8 flex justify-center max-w-[70%] mx-auto">
             <div className="w-[600px]">
               {clientViewMode === "client" ? (
                 // Client View - Team Updates Only
                 <div className="space-y-6">
-                  <div className="text-center mb-8">
-                    <h2 className="text-2xl font-semibold text-white mb-2">
-                      Team Updates
-                    </h2>
-                    <p className="text-sm text-[#86837E]">
-                      Latest updates from your design team
-                    </p>
-                  </div>
-
                   {getClientVisibleUpdates().map((update) => (
                     <motion.div
                       key={update.id}
@@ -1766,141 +1777,292 @@ export default function Dashboard() {
         );
       case "Timeline":
         return (
-          <div className="px-24 pb-8">
+          <div className="px-24 pb-8 max-w-[70%]">
             {clientViewMode === "client" ? (
-              // Client View - Project Schedule
+              // Client View - Payment Overview
               <div className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-semibold text-white mb-2">
-                    Project Schedule
-                  </h2>
-                  <p className="text-sm text-[#86837E]">
-                    Timeline of your project milestones and deadlines
-                  </p>
+                {/* Payment Summary Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  <div className="bg-[#2d2d2d] rounded-xl p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-[#10b981] rounded-lg">
+                        <CheckCircle className="w-5 h-5 text-white" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-white">Paid</h3>
+                    </div>
+                    <div className="text-2xl font-bold text-white mb-1">
+                      $
+                      {filteredInvoices
+                        .filter((inv) => inv.status === "Paid")
+                        .reduce((sum, inv) => sum + inv.amount, 0)
+                        .toLocaleString()}
+                    </div>
+                    <div className="text-sm text-[#86837E]">
+                      {
+                        filteredInvoices.filter((inv) => inv.status === "Paid")
+                          .length
+                      }{" "}
+                      invoices
+                    </div>
+                  </div>
+
+                  <div className="bg-[#2d2d2d] rounded-xl p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-[#3b82f6] rounded-lg">
+                        <Clock className="w-5 h-5 text-white" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-white">
+                        Pending
+                      </h3>
+                    </div>
+                    <div className="text-2xl font-bold text-white mb-1">
+                      $
+                      {filteredInvoices
+                        .filter((inv) => inv.status === "Sent")
+                        .reduce((sum, inv) => sum + inv.amount, 0)
+                        .toLocaleString()}
+                    </div>
+                    <div className="text-sm text-[#86837E]">
+                      {
+                        filteredInvoices.filter((inv) => inv.status === "Sent")
+                          .length
+                      }{" "}
+                      invoices
+                    </div>
+                  </div>
+
+                  <div className="bg-[#2d2d2d] rounded-xl p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 bg-[#ef4444] rounded-lg">
+                        <AlertTriangle className="w-5 h-5 text-white" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-white">
+                        Overdue
+                      </h3>
+                    </div>
+                    <div className="text-2xl font-bold text-white mb-1">
+                      $
+                      {getFilteredOverdueInvoices()
+                        .reduce((sum, inv) => sum + inv.amount, 0)
+                        .toLocaleString()}
+                    </div>
+                    <div className="text-sm text-[#86837E]">
+                      {getFilteredOverdueInvoices().length} invoices
+                    </div>
+                  </div>
                 </div>
 
-                <div className="relative">
-                  {/* Timeline Line */}
-                  <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-[#3d3d3d]"></div>
-
-                  <div className="space-y-8">
-                    {filteredProjects.map((project, index) => (
-                      <motion.div
-                        key={project.id}
-                        className="relative flex items-start gap-3"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                      >
-                        {/* Timeline Dot */}
-                        <div className="relative z-10 flex-shrink-0">
+                {/* Invoice List */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-white">
+                    Recent Invoices
+                  </h3>
+                  {filteredInvoices.slice(0, 5).map((invoice, index) => (
+                    <motion.div
+                      key={invoice.id}
+                      className="bg-[#2d2d2d] rounded-xl p-4"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <h4 className="text-white font-medium mb-1">
+                            {invoice.projectName}
+                          </h4>
+                          <p className="text-sm text-[#86837E]">
+                            {invoice.clientType}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-lg font-semibold text-white">
+                            ${invoice.amount.toLocaleString()}
+                          </div>
                           <div
-                            className={`w-4 h-4 rounded-full border-2 ${
-                              project.status === "Completed"
-                                ? "bg-[#10b981]"
-                                : project.status === "In Progress"
-                                ? "bg-[#3b82f6]"
-                                : project.status === "Review"
-                                ? "bg-[#f59e0b]"
-                                : "bg-[#6b7280]"
+                            className={`inline-block text-xs px-1.5 py-0.5 rounded-full ${
+                              invoice.status === "Paid"
+                                ? "bg-[#10b981] text-white"
+                                : invoice.status === "Sent"
+                                ? "bg-[#3b82f6] text-white"
+                                : invoice.status === "Overdue"
+                                ? "bg-[#ef4444] text-white"
+                                : "bg-[#6b7280] text-white"
                             }`}
                           >
-                            <div className="w-full h-full rounded-full bg-white scale-50"></div>
+                            {invoice.status}
                           </div>
                         </div>
-
-                        {/* Timeline Content */}
-                        <div
-                          className="flex-1 bg-[#2d2d2d] rounded-xl p-4"
-                          style={{ borderRadius: "12px" }}
-                        >
-                          <div className="flex items-start justify-between mb-4">
-                            <div>
-                              <h3 className="text-lg font-semibold text-white mb-2">
-                                {project.name}
-                              </h3>
-                              <div className="flex items-center gap-2 mb-3">
-                                <span
-                                  className={`px-3 py-1 text-xs font-medium ${
-                                    project.status === "Completed"
-                                      ? "bg-[#10b981] text-white"
-                                      : project.status === "In Progress"
-                                      ? "bg-[#3b82f6] text-white"
-                                      : project.status === "Review"
-                                      ? "bg-[#f59e0b] text-white"
-                                      : "bg-[#6b7280] text-white"
-                                  }`}
-                                  style={{ borderRadius: "4px" }}
-                                >
-                                  {project.status === "Completed"
-                                    ? ""
-                                    : project.status === "In Progress"
-                                    ? ""
-                                    : project.status === "Review"
-                                    ? ""
-                                    : ""}{" "}
-                                  {project.status}
-                                </span>
-                              </div>
-                            </div>
-                            <div className="text-right">
-                              <div className="text-sm font-medium text-white">
-                                {new Date(project.deadline).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    month: "short",
-                                    day: "numeric",
-                                    year: "numeric",
-                                  }
-                                )}
-                              </div>
-                              <div className="text-xs text-[#86837E]">
-                                {project.priority} Priority
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="space-y-3">
-                            <div className="flex items-center gap-2 text-sm text-[#86837E]">
-                              <Users className="w-4 h-4" />
-                              <span>{project.clientType}</span>
-                            </div>
-
-                            {project.status === "In Progress" && (
-                              <div className="p-3 bg-[#1a1f26] rounded-lg">
-                                <p className="text-sm text-[#3b82f6]">
-                                  Currently working on design mockups and user
-                                  flow
-                                </p>
-                              </div>
-                            )}
-
-                            {project.status === "Completed" && (
-                              <div className="p-3 bg-[#1a2a1a] border border-[#10b981] rounded-lg">
-                                <p className="text-sm text-[#10b981]">
-                                  Project completed successfully
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                      </div>
+                      <div className="mt-3 text-sm text-[#86837E]">
+                        Due: {new Date(invoice.dueDate).toLocaleDateString()}
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             ) : (
-              // Pro View - Original
-              <div>
-                <h2
-                  className="text-xl font-semibold mb-4"
-                  style={{ color: "#e5e5e5" }}
-                >
-                  Project Timeline
-                </h2>
-                <p className="text-sm" style={{ color: "#86837E" }}>
-                  View your projects in a chronological timeline view.
-                </p>
+              // Pro View - Payment Tracker
+              <div className="space-y-8">
+                {/* Overdue Invoices Alert */}
+                {getFilteredOverdueInvoices().length > 0 && (
+                  <div className="bg-[#2d1a1a] rounded-xl p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <AlertTriangle className="w-5 h-5 text-[#ef4444]" />
+                      <h3 className="text-lg font-semibold text-white">
+                        Overdue Invoices
+                      </h3>
+                    </div>
+                    <div className="space-y-3">
+                      {getFilteredOverdueInvoices().map((invoice) => (
+                        <div
+                          key={invoice.id}
+                          className="flex items-center justify-between bg-[#1a0f0f] rounded-lg p-3"
+                        >
+                          <div>
+                            <div className="text-white font-medium">
+                              {invoice.projectName}
+                            </div>
+                            <div className="text-sm text-[#86837E]">
+                              {invoice.clientType}
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-white font-semibold">
+                              ${invoice.amount.toLocaleString()}
+                            </div>
+                            <div className="text-xs text-[#ef4444]">
+                              {Math.ceil(
+                                (new Date().getTime() -
+                                  new Date(invoice.dueDate).getTime()) /
+                                  (1000 * 60 * 60 * 24)
+                              )}{" "}
+                              days overdue
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Upcoming Payments */}
+                {getFilteredUpcomingInvoices().length > 0 && (
+                  <div className="bg-[#1a1f26] rounded-xl p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <Clock className="w-5 h-5 text-[#3b82f6]" />
+                      <h3 className="text-lg font-semibold text-white">
+                        Due This Week
+                      </h3>
+                    </div>
+                    <div className="space-y-3">
+                      {getFilteredUpcomingInvoices().map((invoice) => (
+                        <div
+                          key={invoice.id}
+                          className="flex items-center justify-between bg-[#0f1419] rounded-lg p-3"
+                        >
+                          <div>
+                            <div className="text-white font-medium">
+                              {invoice.projectName}
+                            </div>
+                            <div className="text-sm text-[#86837E]">
+                              {invoice.clientType}
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-white font-semibold">
+                              ${invoice.amount.toLocaleString()}
+                            </div>
+                            <div className="text-xs text-[#3b82f6]">
+                              Due{" "}
+                              {new Date(invoice.dueDate).toLocaleDateString()}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* All Invoices Table */}
+                <div className="bg-[#2d2d2d] rounded-xl overflow-hidden">
+                  <div className="p-4 border-b border-[#3d3d3d]">
+                    <h3 className="text-lg font-semibold text-white">
+                      All Invoices
+                    </h3>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-[#3d3d3d]">
+                        <tr>
+                          <th className="text-left p-3 text-sm font-medium text-gray-300">
+                            Project
+                          </th>
+                          <th className="text-left p-3 text-sm font-medium text-gray-300">
+                            Client
+                          </th>
+                          <th className="text-left p-3 text-sm font-medium text-gray-300">
+                            Amount
+                          </th>
+                          <th className="text-left p-3 text-sm font-medium text-gray-300">
+                            Status
+                          </th>
+                          <th className="text-left p-3 text-sm font-medium text-gray-300">
+                            Due Date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredInvoices.map((invoice, index) => (
+                          <motion.tr
+                            key={invoice.id}
+                            className="border-b border-[#3d3d3d] hover:bg-[#3d3d3d]/50"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05 }}
+                          >
+                            <td className="p-3">
+                              <div className="text-white font-medium">
+                                {invoice.projectName}
+                              </div>
+                            </td>
+                            <td className="p-3">
+                              <span className="text-sm text-[#86837E]">
+                                {invoice.clientType}
+                              </span>
+                            </td>
+                            <td className="p-3">
+                              <div className="text-white font-semibold">
+                                ${invoice.amount.toLocaleString()}
+                              </div>
+                            </td>
+                            <td className="p-3">
+                              <span
+                                className={`inline-block px-1.5 py-0.5 text-xs font-medium rounded-full ${
+                                  invoice.status === "Paid"
+                                    ? "bg-[#10b981] text-white"
+                                    : invoice.status === "Sent"
+                                    ? "bg-[#3b82f6] text-white"
+                                    : invoice.status === "Overdue"
+                                    ? "bg-[#ef4444] text-white"
+                                    : invoice.status === "Draft"
+                                    ? "bg-[#6b7280] text-white"
+                                    : "bg-[#f59e0b] text-white"
+                                }`}
+                              >
+                                {invoice.status}
+                              </span>
+                            </td>
+                            <td className="p-3">
+                              <div className="text-sm text-[#86837E]">
+                                {new Date(invoice.dueDate).toLocaleDateString()}
+                              </div>
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -2041,86 +2203,51 @@ export default function Dashboard() {
               </motion.button>
             </div>
 
-            {/* Client Filter - Only show in client view */}
-            {clientViewMode === "client" && (
-              <>
-                <span
-                  className="text-2xl font-semibold"
-                  style={{ color: "#86837E", marginLeft: "16px" }}
+            {/* Client Filter - Show in both client and pro view */}
+            <>
+              <span
+                className="text-2xl font-semibold"
+                style={{ color: "#86837E", marginLeft: "16px" }}
+              >
+                /
+              </span>
+              <div className="relative">
+                <select
+                  className="text-2xl font-semibold bg-transparent text-[#86837E] border-none outline-none cursor-pointer pr-8 rounded-lg px-3 py-1"
+                  value={selectedClient || ""}
+                  onChange={(e) => setSelectedClient(e.target.value || null)}
+                  style={{ appearance: "none" }}
                 >
-                  /
-                </span>
-                <div className="relative">
-                  <select
-                    className="text-2xl font-semibold bg-transparent text-[#86837E] border-none outline-none cursor-pointer pr-8 rounded-lg px-3 py-1"
-                    value={selectedClient || ""}
-                    onChange={(e) => setSelectedClient(e.target.value || null)}
-                    style={{ appearance: "none" }}
+                  <option value="" className="bg-transparent text-[#86837E]">
+                    All Clients
+                  </option>
+                  {availableClientTypes.map((clientType) => (
+                    <option
+                      key={clientType}
+                      value={clientType}
+                      className="bg-transparent text-[#86837E]"
+                    >
+                      {clientType}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-[#86837E]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <option value="" className="bg-transparent text-[#86837E]">
-                      All Clients
-                    </option>
-                    <option
-                      value="Enterprise"
-                      className="bg-transparent text-[#86837E]"
-                    >
-                      Enterprise
-                    </option>
-                    <option
-                      value="Startup"
-                      className="bg-transparent text-[#86837E]"
-                    >
-                      Startup
-                    </option>
-                    <option
-                      value="Individual"
-                      className="bg-transparent text-[#86837E]"
-                    >
-                      Individual
-                    </option>
-                    <option
-                      value="Non-profit"
-                      className="bg-transparent text-[#86837E]"
-                    >
-                      Non-profit
-                    </option>
-                    <option
-                      value="Regular Client"
-                      className="bg-transparent text-[#86837E]"
-                    >
-                      Regular Client
-                    </option>
-                    <option
-                      value="International"
-                      className="bg-transparent text-[#86837E]"
-                    >
-                      International
-                    </option>
-                    <option
-                      value="New Client"
-                      className="bg-transparent text-[#86837E]"
-                    >
-                      New Client
-                    </option>
-                  </select>
-                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <svg
-                      className="w-4 h-4 text-[#86837E]"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
                 </div>
-              </>
-            )}
+              </div>
+            </>
           </div>
 
           {/* Client Communication Indicator */}
@@ -2224,10 +2351,8 @@ export default function Dashboard() {
               style={{ borderRadius: "50px" }}
               onClick={() => setActiveTab("Timeline")}
             >
-              <Calendar className="w-4 h-4" />
-              <span className="text-sm">
-                {clientViewMode === "client" ? "Schedule" : "Timeline"}
-              </span>
+              <DollarSign className="w-4 h-4" />
+              <span className="text-sm">Payment</span>
             </button>
 
             <div className="flex items-center gap-2 ml-auto relative">
