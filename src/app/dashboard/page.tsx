@@ -210,7 +210,7 @@ export default function Dashboard() {
                           </h3>
                           <div className="flex items-center gap-2 mb-3">
                             <span
-                              className={`px-3 py-1 text-xs rounded-full font-medium ${
+                              className={`px-3 py-1 text-xs font-medium ${
                                 project.status === "Completed"
                                   ? "bg-[#10b981] text-white"
                                   : project.status === "In Progress"
@@ -219,14 +219,15 @@ export default function Dashboard() {
                                   ? "bg-[#f59e0b] text-white"
                                   : "bg-[#6b7280] text-white"
                               }`}
+                              style={{ borderRadius: "4px" }}
                             >
                               {project.status === "Completed"
-                                ? "✅"
+                                ? ""
                                 : project.status === "In Progress"
-                                ? "🚧"
+                                ? ""
                                 : project.status === "Review"
-                                ? "🕓"
-                                : "⏳"}{" "}
+                                ? ""
+                                : ""}{" "}
                               {project.status}
                             </span>
                           </div>
@@ -257,8 +258,7 @@ export default function Dashboard() {
                         {project.status === "In Progress" && (
                           <div className="p-3 bg-[#1a1f26] border border-[#3b82f6] rounded-lg">
                             <p className="text-sm text-[#3b82f6]">
-                              🚧 Currently working on design mockups and user
-                              flow
+                              Currently working on design mockups and user flow
                             </p>
                           </div>
                         )}
@@ -701,12 +701,12 @@ export default function Dashboard() {
                             </div>
                             <div className="text-sm text-[#86837E]">
                               {project.status === "Completed"
-                                ? "✅ Complete"
+                                ? "Complete"
                                 : project.status === "In Progress"
-                                ? "🚧 In Progress"
+                                ? "In Progress"
                                 : project.status === "Review"
-                                ? "🕓 Review"
-                                : "⏳ Not Started"}
+                                ? "Review"
+                                : "Not Started"}
                             </div>
                           </div>
                         </div>
@@ -905,7 +905,7 @@ export default function Dashboard() {
                     return (
                       <motion.div
                         key={project.id}
-                        className="p-6 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-all cursor-pointer border border-[#3d3d3d] rounded-xl"
+                        className="p-6 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-all cursor-pointer rounded-xl"
                         whileHover={{
                           scale: 1.02,
                           boxShadow: "0 8px 25px rgba(0,0,0,0.3)",
@@ -919,7 +919,7 @@ export default function Dashboard() {
                             </h3>
                             <div className="flex items-center gap-2 mb-3">
                               <span
-                                className={`px-3 py-1 text-xs rounded-full font-medium ${
+                                className={`px-3 py-1 text-xs font-medium ${
                                   project.status === "Completed"
                                     ? "bg-[#10b981] text-white"
                                     : project.status === "In Progress"
@@ -928,14 +928,15 @@ export default function Dashboard() {
                                     ? "bg-[#f59e0b] text-white"
                                     : "bg-[#6b7280] text-white"
                                 }`}
+                                style={{ borderRadius: "4px" }}
                               >
                                 {project.status === "Completed"
-                                  ? "✅"
+                                  ? ""
                                   : project.status === "In Progress"
-                                  ? "🚧"
+                                  ? ""
                                   : project.status === "Review"
-                                  ? "🕓"
-                                  : "⏳"}{" "}
+                                  ? ""
+                                  : ""}{" "}
                                 {project.status}
                               </span>
                             </div>
@@ -1011,9 +1012,9 @@ export default function Dashboard() {
                           </div>
 
                           {project.status === "In Progress" && (
-                            <div className="p-3 bg-[#1a1f26] border border-[#3b82f6] rounded-lg">
+                            <div className="p-3 bg-[#1a1f26] rounded-lg">
                               <p className="text-sm text-[#3b82f6]">
-                                🚧 Currently working on design mockups and user
+                                Currently working on design mockups and user
                                 flow
                               </p>
                             </div>
@@ -1025,7 +1026,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Recent Updates */}
-                <div className="bg-[#2d2d2d] border border-[#3d3d3d] rounded-xl p-6">
+                <div className="bg-[#2d2d2d] rounded-xl p-6">
                   <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <MessageCircle className="w-5 h-5" />
                     Recent Updates
@@ -1136,7 +1137,7 @@ export default function Dashboard() {
 
                 {/* Add New Item Card */}
                 <motion.div
-                  className="p-4 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors cursor-pointer border-2 border-dashed border-[#3d3d3d]"
+                  className="p-4 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors cursor-pointer border-2 border-dashed"
                   style={{ borderRadius: "12px" }}
                   whileHover={{ opacity: 0.8 }}
                   whileTap={{ opacity: 0.9 }}
@@ -1370,7 +1371,7 @@ export default function Dashboard() {
                             <input
                               type="text"
                               placeholder="Add a comment..."
-                              className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                              className="w-full bg-transparent text-xs py-2 px-3 border rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
                               style={{ color: "#e5e5e5" }}
                             />
                           </div>
@@ -1456,7 +1457,7 @@ export default function Dashboard() {
                             <input
                               type="text"
                               placeholder="Add a comment..."
-                              className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                              className="w-full bg-transparent text-xs py-2 px-3 border rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
                               style={{ color: "#e5e5e5" }}
                             />
                           </div>
@@ -1572,7 +1573,7 @@ export default function Dashboard() {
                             <input
                               type="text"
                               placeholder="Add a comment..."
-                              className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                              className="w-full bg-transparent text-xs py-2 px-3 border rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
                               style={{ color: "#e5e5e5" }}
                             />
                           </div>
@@ -1658,7 +1659,7 @@ export default function Dashboard() {
                             <input
                               type="text"
                               placeholder="Add a comment..."
-                              className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                              className="w-full bg-transparent text-xs py-2 px-3 border rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
                               style={{ color: "#e5e5e5" }}
                             />
                           </div>
@@ -1744,7 +1745,7 @@ export default function Dashboard() {
                             <input
                               type="text"
                               placeholder="Add a comment..."
-                              className="w-full bg-transparent text-xs py-2 px-3 border border-[#3d3d3d] rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
+                              className="w-full bg-transparent text-xs py-2 px-3 border rounded-md focus:outline-none focus:border-[#4d4d4d] transition-colors"
                               style={{ color: "#e5e5e5" }}
                             />
                           </div>
@@ -1790,12 +1791,12 @@ export default function Dashboard() {
                           <div
                             className={`w-4 h-4 rounded-full border-2 ${
                               project.status === "Completed"
-                                ? "bg-[#10b981] border-[#10b981]"
+                                ? "bg-[#10b981]"
                                 : project.status === "In Progress"
-                                ? "bg-[#3b82f6] border-[#3b82f6]"
+                                ? "bg-[#3b82f6]"
                                 : project.status === "Review"
-                                ? "bg-[#f59e0b] border-[#f59e0b]"
-                                : "bg-[#6b7280] border-[#6b7280]"
+                                ? "bg-[#f59e0b]"
+                                : "bg-[#6b7280]"
                             }`}
                           >
                             <div className="w-full h-full rounded-full bg-white scale-50"></div>
@@ -1814,7 +1815,7 @@ export default function Dashboard() {
                               </h3>
                               <div className="flex items-center gap-2 mb-3">
                                 <span
-                                  className={`px-3 py-1 text-xs rounded-full font-medium ${
+                                  className={`px-3 py-1 text-xs font-medium ${
                                     project.status === "Completed"
                                       ? "bg-[#10b981] text-white"
                                       : project.status === "In Progress"
@@ -1823,14 +1824,15 @@ export default function Dashboard() {
                                       ? "bg-[#f59e0b] text-white"
                                       : "bg-[#6b7280] text-white"
                                   }`}
+                                  style={{ borderRadius: "4px" }}
                                 >
                                   {project.status === "Completed"
-                                    ? "✅"
+                                    ? ""
                                     : project.status === "In Progress"
-                                    ? "🚧"
+                                    ? ""
                                     : project.status === "Review"
-                                    ? "🕓"
-                                    : "⏳"}{" "}
+                                    ? ""
+                                    : ""}{" "}
                                   {project.status}
                                 </span>
                               </div>
@@ -1859,10 +1861,10 @@ export default function Dashboard() {
                             </div>
 
                             {project.status === "In Progress" && (
-                              <div className="p-3 bg-[#1a1f26] border border-[#3b82f6] rounded-lg">
+                              <div className="p-3 bg-[#1a1f26] rounded-lg">
                                 <p className="text-sm text-[#3b82f6]">
-                                  🚧 Currently working on design mockups and
-                                  user flow
+                                  Currently working on design mockups and user
+                                  flow
                                 </p>
                               </div>
                             )}
@@ -1870,7 +1872,7 @@ export default function Dashboard() {
                             {project.status === "Completed" && (
                               <div className="p-3 bg-[#1a2a1a] border border-[#10b981] rounded-lg">
                                 <p className="text-sm text-[#10b981]">
-                                  ✅ Project completed successfully
+                                  Project completed successfully
                                 </p>
                               </div>
                             )}
