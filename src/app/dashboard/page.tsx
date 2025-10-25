@@ -54,6 +54,12 @@ export default function Dashboard() {
 
   const projects = getFilteredProjects();
 
+  // Apply client filtering in client view mode
+  const filteredProjects =
+    clientViewMode === "client" && selectedClient
+      ? projects.filter((project) => project.clientType === selectedClient)
+      : projects;
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedProject(undefined);
@@ -195,7 +201,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {projects.map((project) => (
+                  {filteredProjects.map((project) => (
                     <motion.div
                       key={project.id}
                       className="p-4 bg-[#2d2d2d] hover:bg-[#3d3d3d] transition-colors cursor-pointer"
@@ -670,7 +676,7 @@ export default function Dashboard() {
 
                 {/* Progress Bars */}
                 <div className="space-y-6">
-                  {projects.map((project) => {
+                  {filteredProjects.map((project) => {
                     const progress =
                       project.status === "Completed"
                         ? 100
@@ -892,7 +898,7 @@ export default function Dashboard() {
 
                 {/* Project Cards with Progress Rings */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {projects.map((project) => {
+                  {filteredProjects.map((project) => {
                     const progress =
                       project.status === "Completed"
                         ? 100
@@ -1778,7 +1784,7 @@ export default function Dashboard() {
                   <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-[#3d3d3d]"></div>
 
                   <div className="space-y-8">
-                    {projects.map((project, index) => (
+                    {filteredProjects.map((project, index) => (
                       <motion.div
                         key={project.id}
                         className="relative flex items-start gap-3"
@@ -2034,6 +2040,87 @@ export default function Dashboard() {
                 )}
               </motion.button>
             </div>
+
+            {/* Client Filter - Only show in client view */}
+            {clientViewMode === "client" && (
+              <>
+                <span
+                  className="text-2xl font-semibold"
+                  style={{ color: "#86837E", marginLeft: "16px" }}
+                >
+                  /
+                </span>
+                <div className="relative">
+                  <select
+                    className="text-2xl font-semibold bg-transparent text-[#86837E] border-none outline-none cursor-pointer pr-8 rounded-lg px-3 py-1"
+                    value={selectedClient || ""}
+                    onChange={(e) => setSelectedClient(e.target.value || null)}
+                    style={{ appearance: "none" }}
+                  >
+                    <option value="" className="bg-transparent text-[#86837E]">
+                      All Clients
+                    </option>
+                    <option
+                      value="Enterprise"
+                      className="bg-transparent text-[#86837E]"
+                    >
+                      Enterprise
+                    </option>
+                    <option
+                      value="Startup"
+                      className="bg-transparent text-[#86837E]"
+                    >
+                      Startup
+                    </option>
+                    <option
+                      value="Individual"
+                      className="bg-transparent text-[#86837E]"
+                    >
+                      Individual
+                    </option>
+                    <option
+                      value="Non-profit"
+                      className="bg-transparent text-[#86837E]"
+                    >
+                      Non-profit
+                    </option>
+                    <option
+                      value="Regular Client"
+                      className="bg-transparent text-[#86837E]"
+                    >
+                      Regular Client
+                    </option>
+                    <option
+                      value="International"
+                      className="bg-transparent text-[#86837E]"
+                    >
+                      International
+                    </option>
+                    <option
+                      value="New Client"
+                      className="bg-transparent text-[#86837E]"
+                    >
+                      New Client
+                    </option>
+                  </select>
+                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <svg
+                      className="w-4 h-4 text-[#86837E]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Client Communication Indicator */}
