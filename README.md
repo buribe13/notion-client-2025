@@ -1,4 +1,4 @@
-# Notion Client - Freelance Projects Dashboard
+# haaa Notion Client - Freelance Projects Dashboard
 
 A responsive, dark-mode dashboard UI inspired by Notion, specifically designed for creative freelancers who manage multiple client projects. Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion.
 
