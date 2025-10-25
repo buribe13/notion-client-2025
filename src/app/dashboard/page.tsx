@@ -6,6 +6,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { ProjectModal } from "@/components/ProjectModal";
 import { ClientMessage } from "@/components/ClientMessage";
 import { useDashboardStore } from "@/lib/store";
+import { Theme } from "@/types";
 import { motion } from "framer-motion";
 import {
   Share,
@@ -35,9 +36,13 @@ import {
   DollarSign,
   AlertTriangle,
   CreditCard,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 export default function Dashboard() {
+  // Theme-aware dashboard component
+  const store = useDashboardStore();
   const {
     getFilteredProjects,
     isModalOpen,
@@ -52,7 +57,9 @@ export default function Dashboard() {
     getOverdueInvoices,
     getUpcomingInvoices,
     invoices,
-  } = useDashboardStore();
+    setTheme,
+  } = store;
+  const theme = store.theme;
 
   const [activeTab, setActiveTab] = useState("Project Board");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -97,6 +104,58 @@ export default function Dashboard() {
   const availableClientTypes = Array.from(
     new Set(invoices.map((invoice) => invoice.clientType))
   );
+
+  // Theme-aware color helper
+  const getThemeColors = () => {
+    if (theme === "light") {
+      return {
+        bg: "#ffffff",
+        bgSecondary: "#f8f9fa",
+        bgTertiary: "#e9ecef",
+        text: "#212529",
+        textSecondary: "#6c757d",
+        textMuted: "#868e96",
+        border: "#dee2e6",
+        hover: "#f1f3f4",
+        card: "#ffffff",
+        sidebar: "#f8f9fa",
+      };
+    } else {
+      return {
+        bg: "#181818",
+        bgSecondary: "#2d2d2d",
+        bgTertiary: "#3d3d3d",
+        text: "#e5e5e5",
+        textSecondary: "#86837E",
+        textMuted: "#86837E",
+        border: "#3d3d3d",
+        hover: "#3d3d3d",
+        card: "#2d2d2d",
+        sidebar: "#202020",
+      };
+    }
+  };
+
+  const colors = getThemeColors();
+
+  // Helper function for tab button styles
+  const getTabButtonStyle = (isActive: boolean) => ({
+    backgroundColor: isActive ? colors.bgSecondary : "transparent",
+    color: isActive ? colors.text : colors.textMuted,
+    borderRadius: "50px",
+    padding: "8px 12px",
+    transition: "all 0.2s",
+    cursor: "pointer",
+    border: "none",
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+  });
+
+  const getTabButtonHoverStyle = (isActive: boolean) => ({
+    backgroundColor: isActive ? colors.bgSecondary : colors.hover,
+    color: colors.text,
+  });
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -709,23 +768,38 @@ export default function Dashboard() {
                     return (
                       <div
                         key={project.id}
-                        className="bg-[#2d2d2d] rounded-xl p-4"
-                        style={{ borderRadius: "12px" }}
+                        className="rounded-xl p-4"
+                        style={{
+                          borderRadius: "12px",
+                          backgroundColor: colors.card,
+                        }}
                       >
                         <div className="flex items-center justify-between mb-4">
                           <div>
-                            <h3 className="text-lg font-semibold text-white">
+                            <h3
+                              className="text-lg font-semibold"
+                              style={{ color: colors.text }}
+                            >
                               {project.name}
                             </h3>
-                            <p className="text-sm text-[#86837E]">
+                            <p
+                              className="text-sm"
+                              style={{ color: colors.textMuted }}
+                            >
                               {project.clientType}
                             </p>
                           </div>
                           <div className="text-right">
-                            <div className="text-2xl font-bold text-white">
+                            <div
+                              className="text-2xl font-bold"
+                              style={{ color: colors.text }}
+                            >
                               {progress}%
                             </div>
-                            <div className="text-sm text-[#86837E]">
+                            <div
+                              className="text-sm"
+                              style={{ color: colors.textMuted }}
+                            >
                               {project.status === "Completed"
                                 ? "Complete"
                                 : project.status === "In Progress"
@@ -738,7 +812,10 @@ export default function Dashboard() {
                         </div>
 
                         <div className="mb-4">
-                          <div className="w-full bg-[#3d3d3d] rounded-full h-3">
+                          <div
+                            className="w-full rounded-full h-3"
+                            style={{ backgroundColor: colors.bgTertiary }}
+                          >
                             <motion.div
                               className={`h-3 rounded-full ${
                                 project.status === "Completed"
@@ -756,7 +833,10 @@ export default function Dashboard() {
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between text-sm text-[#86837E]">
+                        <div
+                          className="flex items-center justify-between text-sm"
+                          style={{ color: colors.textMuted }}
+                        >
                           <span>
                             Due:{" "}
                             {new Date(project.deadline).toLocaleDateString(
@@ -778,40 +858,60 @@ export default function Dashboard() {
                 {/* Summary Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div
-                    className="bg-[#1F1F1F] rounded-xl p-4 text-center"
-                    style={{ borderRadius: "12px" }}
+                    className="rounded-xl p-4 text-center"
+                    style={{
+                      borderRadius: "12px",
+                      backgroundColor: colors.bgSecondary,
+                    }}
                   >
                     <div className="text-3xl font-bold text-[#10b981] mb-2">
                       {completeProjects.length}
                     </div>
-                    <div className="text-sm text-white">Completed</div>
+                    <div className="text-sm" style={{ color: colors.text }}>
+                      Completed
+                    </div>
                   </div>
                   <div
-                    className="bg-[#1F1F1F] rounded-xl p-4 text-center"
-                    style={{ borderRadius: "12px" }}
+                    className="rounded-xl p-4 text-center"
+                    style={{
+                      borderRadius: "12px",
+                      backgroundColor: colors.bgSecondary,
+                    }}
                   >
                     <div className="text-3xl font-bold text-[#3b82f6] mb-2">
                       {inProgressProjects.length}
                     </div>
-                    <div className="text-sm text-white">In Progress</div>
+                    <div className="text-sm" style={{ color: colors.text }}>
+                      In Progress
+                    </div>
                   </div>
                   <div
-                    className="bg-[#1F1F1F] rounded-xl p-4 text-center"
-                    style={{ borderRadius: "12px" }}
+                    className="rounded-xl p-4 text-center"
+                    style={{
+                      borderRadius: "12px",
+                      backgroundColor: colors.bgSecondary,
+                    }}
                   >
                     <div className="text-3xl font-bold text-[#f59e0b] mb-2">
                       {projects.filter((p) => p.status === "Review").length}
                     </div>
-                    <div className="text-sm text-white">In Review</div>
+                    <div className="text-sm" style={{ color: colors.text }}>
+                      In Review
+                    </div>
                   </div>
                   <div
-                    className="bg-[#1F1F1F] rounded-xl p-4 text-center"
-                    style={{ borderRadius: "12px" }}
+                    className="rounded-xl p-4 text-center"
+                    style={{
+                      borderRadius: "12px",
+                      backgroundColor: colors.bgSecondary,
+                    }}
                   >
                     <div className="text-3xl font-bold text-[#86837E] mb-2">
                       {todoProjects.length}
                     </div>
-                    <div className="text-sm text-white">Upcoming</div>
+                    <div className="text-sm" style={{ color: colors.text }}>
+                      Upcoming
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2100,32 +2200,98 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex h-screen" style={{ backgroundColor: "#181818" }}>
+    <div className="flex h-screen" style={{ backgroundColor: colors.bg }}>
       <Sidebar />
 
       <div className="flex-1 flex flex-col lg:ml-0">
         {/* Top Bar (Breadcrumb) */}
-        <div className="px-3 py-1" style={{ backgroundColor: "#181818" }}>
+        <div className="px-3 py-1" style={{ backgroundColor: colors.bg }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-xs lg:text-sm" style={{ color: "#86837E" }}>
+              <span
+                className="text-xs lg:text-sm"
+                style={{ color: colors.textMuted }}
+              >
                 dashboard / breadcrumb ... /{" "}
               </span>
-              <span className="text-xs lg:text-sm" style={{ color: "#e5e5e5" }}>
+              <span
+                className="text-xs lg:text-sm"
+                style={{ color: colors.text }}
+              >
                 Freelance Projects
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <button className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors">
-                <Star className="w-4 h-4" style={{ color: "#86837E" }} />
+              <button
+                className={`p-2 transition-colors`}
+                style={{
+                  backgroundColor: "transparent",
+                  color: colors.textMuted,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = colors.hover;
+                  e.currentTarget.style.color = colors.text;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.color = colors.textMuted;
+                }}
+              >
+                <Star className="w-4 h-4" />
               </button>
-              <button className="p-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] transition-colors">
-                <MoreHorizontal
-                  className="w-4 h-4"
-                  style={{ color: "#86837E" }}
-                />
+              <button
+                className={`p-2 transition-colors`}
+                style={{
+                  backgroundColor: "transparent",
+                  color: colors.textMuted,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = colors.hover;
+                  e.currentTarget.style.color = colors.text;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.color = colors.textMuted;
+                }}
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-4 h-4" />
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )}
               </button>
-              <button className="flex items-center gap-2 px-3 py-2 text-[#e5e5e5] hover:text-[#e5e5e5] transition-colors">
+              <button
+                className={`p-2 transition-colors`}
+                style={{
+                  backgroundColor: "transparent",
+                  color: colors.textMuted,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = colors.hover;
+                  e.currentTarget.style.color = colors.text;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.color = colors.textMuted;
+                }}
+              >
+                <MoreHorizontal className="w-4 h-4" />
+              </button>
+              <button
+                className="flex items-center gap-2 px-3 py-2 transition-colors"
+                style={{
+                  backgroundColor: "transparent",
+                  color: colors.text,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = colors.hover;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                }}
+              >
                 <Share className="w-4 h-4" />
                 <span className="text-sm">Share</span>
               </button>
@@ -2137,22 +2303,22 @@ export default function Dashboard() {
         <div className="px-24 pt-12 pb-2">
           <div className="flex items-center mb-2">
             <div className="flex items-center gap-3">
-              <CheckSquare className="w-6 h-6" style={{ color: "#e5e5e5" }} />
+              <CheckSquare className="w-6 h-6" style={{ color: colors.text }} />
               <h1
                 className="text-2xl font-semibold"
-                style={{ color: "#e5e5e5" }}
+                style={{ color: colors.text }}
               >
                 Freelance Projects
               </h1>
               <span
                 className="text-2xl font-semibold"
-                style={{ color: "#86837E" }}
+                style={{ color: colors.textMuted }}
               >
                 /
               </span>
               <span
                 className="text-2xl font-semibold"
-                style={{ color: "#86837E" }}
+                style={{ color: colors.textMuted }}
               >
                 Viewing in:
               </span>
@@ -2164,12 +2330,13 @@ export default function Dashboard() {
               style={{ marginLeft: "12px" }}
             >
               <motion.button
-                className={`flex items-center gap-2 px-4 py-2 transition-all hover:opacity-80 ${
-                  clientViewMode === "pro"
-                    ? "bg-[#1F1F1F] text-white"
-                    : "bg-[#f59e0b] text-white"
-                }`}
-                style={{ borderRadius: "12px" }}
+                className="flex items-center gap-2 px-4 py-2 transition-all hover:opacity-80"
+                style={{
+                  borderRadius: "12px",
+                  backgroundColor:
+                    clientViewMode === "pro" ? colors.bgSecondary : "#f59e0b",
+                  color: "white",
+                }}
                 onClick={() => {
                   if (clientViewMode === "pro") {
                     setClientViewMode("client");
@@ -2207,25 +2374,37 @@ export default function Dashboard() {
             <>
               <span
                 className="text-2xl font-semibold"
-                style={{ color: "#86837E", marginLeft: "16px" }}
+                style={{ color: colors.textMuted, marginLeft: "16px" }}
               >
                 /
               </span>
               <div className="relative">
                 <select
-                  className="text-2xl font-semibold bg-transparent text-[#86837E] border-none outline-none cursor-pointer pr-8 rounded-lg px-3 py-1"
+                  className="text-2xl font-semibold bg-transparent border-none outline-none cursor-pointer pr-8 rounded-lg px-3 py-1"
+                  style={{
+                    appearance: "none",
+                    color: colors.textMuted,
+                  }}
                   value={selectedClient || ""}
                   onChange={(e) => setSelectedClient(e.target.value || null)}
-                  style={{ appearance: "none" }}
                 >
-                  <option value="" className="bg-transparent text-[#86837E]">
+                  <option
+                    value=""
+                    style={{
+                      backgroundColor: colors.bg,
+                      color: colors.textMuted,
+                    }}
+                  >
                     All Clients
                   </option>
                   {availableClientTypes.map((clientType) => (
                     <option
                       key={clientType}
                       value={clientType}
-                      className="bg-transparent text-[#86837E]"
+                      style={{
+                        backgroundColor: colors.bg,
+                        color: colors.textMuted,
+                      }}
                     >
                       {clientType}
                     </option>
@@ -2233,7 +2412,8 @@ export default function Dashboard() {
                 </select>
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
                   <svg
-                    className="w-4 h-4 text-[#86837E]"
+                    className="w-4 h-4"
+                    style={{ color: colors.textMuted }}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -2269,12 +2449,19 @@ export default function Dashboard() {
           {/* Sub-menu Tabs */}
           <div className="flex items-center gap-1 mb-2">
             <button
-              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
-                activeTab === "Project Board"
-                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
-                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
-              }`}
-              style={{ borderRadius: "50px" }}
+              style={getTabButtonStyle(activeTab === "Project Board")}
+              onMouseEnter={(e) => {
+                Object.assign(
+                  e.currentTarget.style,
+                  getTabButtonHoverStyle(activeTab === "Project Board")
+                );
+              }}
+              onMouseLeave={(e) => {
+                Object.assign(
+                  e.currentTarget.style,
+                  getTabButtonStyle(activeTab === "Project Board")
+                );
+              }}
               onClick={() => setActiveTab("Project Board")}
             >
               <BarChart3 className="w-4 h-4" />
@@ -2313,12 +2500,19 @@ export default function Dashboard() {
               </span>
             </button>
             <button
-              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
-                activeTab === "Client Progress View"
-                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
-                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
-              }`}
-              style={{ borderRadius: "50px" }}
+              style={getTabButtonStyle(activeTab === "Client Progress View")}
+              onMouseEnter={(e) => {
+                Object.assign(
+                  e.currentTarget.style,
+                  getTabButtonHoverStyle(activeTab === "Client Progress View")
+                );
+              }}
+              onMouseLeave={(e) => {
+                Object.assign(
+                  e.currentTarget.style,
+                  getTabButtonStyle(activeTab === "Client Progress View")
+                );
+              }}
               onClick={() => setActiveTab("Client Progress View")}
             >
               <Grid3X3 className="w-4 h-4" />
@@ -2329,12 +2523,19 @@ export default function Dashboard() {
               </span>
             </button>
             <button
-              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
-                activeTab === "Feed"
-                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
-                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
-              }`}
-              style={{ borderRadius: "50px" }}
+              style={getTabButtonStyle(activeTab === "Feed")}
+              onMouseEnter={(e) => {
+                Object.assign(
+                  e.currentTarget.style,
+                  getTabButtonHoverStyle(activeTab === "Feed")
+                );
+              }}
+              onMouseLeave={(e) => {
+                Object.assign(
+                  e.currentTarget.style,
+                  getTabButtonStyle(activeTab === "Feed")
+                );
+              }}
               onClick={() => setActiveTab("Feed")}
             >
               <Rss className="w-4 h-4" />
@@ -2343,12 +2544,19 @@ export default function Dashboard() {
               </span>
             </button>
             <button
-              className={`flex items-center gap-2 px-3 py-2 transition-colors ${
-                activeTab === "Timeline"
-                  ? "bg-[#3d3d3d] text-[#e5e5e5]"
-                  : "bg-transparent text-[#86837E] hover:bg-[#3d3d3d] hover:text-[#e5e5e5]"
-              }`}
-              style={{ borderRadius: "50px" }}
+              style={getTabButtonStyle(activeTab === "Timeline")}
+              onMouseEnter={(e) => {
+                Object.assign(
+                  e.currentTarget.style,
+                  getTabButtonHoverStyle(activeTab === "Timeline")
+                );
+              }}
+              onMouseLeave={(e) => {
+                Object.assign(
+                  e.currentTarget.style,
+                  getTabButtonStyle(activeTab === "Timeline")
+                );
+              }}
               onClick={() => setActiveTab("Timeline")}
             >
               <DollarSign className="w-4 h-4" />

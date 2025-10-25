@@ -8,6 +8,7 @@ import {
   ClientViewMode,
   ClientUpdate,
   Invoice,
+  Theme,
 } from "@/types";
 import { mockProjects } from "@/lib/data/projects";
 import { mockInvoices } from "@/lib/data/invoices";
@@ -28,6 +29,7 @@ interface DashboardStore extends DashboardState {
   addClientUpdate: (update: ClientUpdate) => void;
   markUpdateAsVisibleToClient: (updateId: string) => void;
   markClientUpdatesAsViewed: () => void;
+  setTheme: (theme: Theme) => void;
 
   // Computed
   getFilteredProjects: () => Project[];
@@ -48,6 +50,7 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
   selectedProject: undefined,
   isModalOpen: false,
   clientViewMode: "pro",
+  theme: "dark",
   clientUpdates: [
     {
       id: "1",
@@ -140,6 +143,8 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
         isNewForClient: false,
       })),
     })),
+
+  setTheme: (theme) => set({ theme }),
 
   // Computed
   getFilteredProjects: () => {

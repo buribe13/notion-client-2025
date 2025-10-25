@@ -240,7 +240,7 @@ export function Sidebar() {
                     </span>
                   </div>
                   <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <Plus className="w-4 h-4" style={{ color: "#86837E" }} />
+                    <Plus className="w-4 h-4 text-gray-600" />
                     <span className="text-sm" style={{ color: "#86837E" }}>
                       Add new
                     </span>
