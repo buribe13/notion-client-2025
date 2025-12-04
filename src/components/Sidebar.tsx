@@ -31,6 +31,15 @@ export function Sidebar() {
     private: false,
   });
 
+  const palette = {
+    muted: { color: "hsl(var(--muted-foreground))" },
+    text: { color: "hsl(var(--foreground))" },
+    badge: {
+      backgroundColor: "hsl(var(--muted))",
+      color: "hsl(var(--foreground))",
+    },
+  };
+
   const toggleSection = (section: keyof typeof collapsedSections) => {
     setCollapsedSections((prev) => ({
       ...prev,
@@ -43,7 +52,7 @@ export function Sidebar() {
       {/* Mobile Menu Button */}
       <button
         className="lg:hidden fixed top-4 left-4 z-50 p-2 text-white rounded-md"
-        style={{ backgroundColor: "#202020" }}
+        style={{ backgroundColor: "hsl(var(--secondary))" }}
         onClick={() => setIsMobileOpen(!isMobileOpen)}
       >
         <svg
@@ -80,18 +89,12 @@ export function Sidebar() {
       >
         {/* Header */}
         <div className="p-1">
-          <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-            <div
-              className="w-5 h-5 rounded-full"
-              style={{ backgroundColor: "#ff6b35" }}
-            ></div>
-            <span className="text-sm font-medium" style={{ color: "#86837E" }}>
+          <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
+            <div className="w-5 h-5 rounded-full" style={{ backgroundColor: "#ff6b35" }}></div>
+            <span className="text-sm font-medium" style={palette.muted}>
               benjamin's Notion
             </span>
-            <ChevronDown
-              className="w-4 h-4 ml-auto"
-              style={{ color: "#86837E" }}
-            />
+            <ChevronDown className="w-4 h-4 ml-auto" style={palette.muted} />
           </div>
         </div>
 
@@ -100,27 +103,27 @@ export function Sidebar() {
           {/* Core Navigation Section */}
           <div className="mb-6">
             <div className="space-y-0">
-              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                <Search className="w-4 h-4" style={{ color: "#86837E" }} />
-                <span className="text-sm" style={{ color: "#86837E" }}>
+              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
+                <Search className="w-4 h-4" style={palette.muted} />
+                <span className="text-sm" style={palette.muted}>
                   Search
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                <Home className="w-4 h-4" style={{ color: "#86837E" }} />
-                <span className="text-sm" style={{ color: "#86837E" }}>
+              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
+                <Home className="w-4 h-4" style={palette.muted} />
+                <span className="text-sm" style={palette.muted}>
                   Home
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                <Sparkles className="w-4 h-4" style={{ color: "#86837E" }} />
-                <span className="text-sm" style={{ color: "#86837E" }}>
+              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
+                <Sparkles className="w-4 h-4" style={palette.muted} />
+                <span className="text-sm" style={palette.muted}>
                   Notion AI
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                <Inbox className="w-4 h-4" style={{ color: "#86837E" }} />
-                <span className="text-sm" style={{ color: "#86837E" }}>
+              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
+                <Inbox className="w-4 h-4" style={palette.muted} />
+                <span className="text-sm" style={palette.muted}>
                   Inbox
                 </span>
               </div>
@@ -133,28 +136,25 @@ export function Sidebar() {
             <div className="mb-0">
               <button
                 onClick={() => toggleSection("favorites")}
-                className="flex items-center gap-2 w-full font-normal text-xs tracking-wider mb-0 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors rounded-md"
-                style={{ color: "#86837E", fontSize: "9pt" }}
+                className="flex items-center gap-2 w-full font-normal text-xs tracking-wider mb-0 px-3 py-2 notion-tile rounded-md"
+                style={{ ...palette.muted, fontSize: "9pt" }}
               >
                 Favorites
               </button>
               {!collapsedSections.favorites && (
                 <div className="space-y-1">
-                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
                     <span className="text-sm">📅</span>
-                    <span className="text-sm" style={{ color: "#86837E" }}>
+                    <span className="text-sm" style={palette.muted}>
                       WKLY AGENDA
                     </span>
-                    <span
-                      className="text-xs px-2 py-0.5 rounded-full ml-auto"
-                      style={{ backgroundColor: "#3d3d3d", color: "#e5e5e5" }}
-                    >
+                    <span className="text-xs px-2 py-0.5 rounded-full ml-auto" style={palette.badge}>
                       17
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
                     <span className="text-sm">✨</span>
-                    <span className="text-sm" style={{ color: "#86837E" }}>
+                    <span className="text-sm" style={palette.muted}>
                       dashboard / breadcrumb...
                     </span>
                   </div>
@@ -166,28 +166,28 @@ export function Sidebar() {
             <div className="mb-0">
               <button
                 onClick={() => toggleSection("workspace")}
-                className="flex items-center gap-2 w-full font-normal text-xs tracking-wider mb-0 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors rounded-md"
-                style={{ color: "#86837E", fontSize: "9pt" }}
+                className="flex items-center gap-2 w-full font-normal text-xs tracking-wider mb-0 px-3 py-2 notion-tile rounded-md"
+                style={{ ...palette.muted, fontSize: "9pt" }}
               >
                 Workspace
               </button>
               {!collapsedSections.workspace && (
                 <div className="space-y-1">
-                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
                     <span className="text-sm">✨</span>
-                    <span className="text-sm" style={{ color: "#86837E" }}>
+                    <span className="text-sm" style={palette.muted}>
                       dashboard / breadcrumb...
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
                     <span className="text-sm">🍎</span>
-                    <span className="text-sm" style={{ color: "#86837E" }}>
+                    <span className="text-sm" style={palette.muted}>
                       My Dashboard
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
                     <span className="text-sm">📄</span>
-                    <span className="text-sm" style={{ color: "#86837E" }}>
+                    <span className="text-sm" style={palette.muted}>
                       UX project planner/tracker
                     </span>
                   </div>
@@ -199,16 +199,16 @@ export function Sidebar() {
             <div className="mb-0">
               <button
                 onClick={() => toggleSection("shared")}
-                className="flex items-center gap-2 w-full font-normal text-xs tracking-wider mb-0 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors rounded-md"
-                style={{ color: "#86837E", fontSize: "9pt" }}
+                className="flex items-center gap-2 w-full font-normal text-xs tracking-wider mb-0 px-3 py-2 notion-tile rounded-md"
+                style={{ ...palette.muted, fontSize: "9pt" }}
               >
                 Shared
               </button>
               {!collapsedSections.shared && (
                 <div className="space-y-1">
-                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
                     <span className="text-sm">🍎</span>
-                    <span className="text-sm" style={{ color: "#86837E" }}>
+                    <span className="text-sm" style={palette.muted}>
                       My Dashboard
                     </span>
                   </div>
@@ -220,28 +220,28 @@ export function Sidebar() {
             <div className="mb-0">
               <button
                 onClick={() => toggleSection("private")}
-                className="flex items-center gap-2 w-full font-normal text-xs tracking-wider mb-0 px-3 py-2 hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors rounded-md"
-                style={{ color: "#86837E", fontSize: "9pt" }}
+                className="flex items-center gap-2 w-full font-normal text-xs tracking-wider mb-0 px-3 py-2 notion-tile rounded-md"
+                style={{ ...palette.muted, fontSize: "9pt" }}
               >
                 Private
               </button>
               {!collapsedSections.private && (
                 <div className="space-y-1">
-                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
                     <span className="text-sm">📄</span>
-                    <span className="text-sm" style={{ color: "#86837E" }}>
+                    <span className="text-sm" style={palette.muted}>
                       New page
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
                     <span className="text-sm">📄</span>
-                    <span className="text-sm" style={{ color: "#86837E" }}>
+                    <span className="text-sm" style={palette.muted}>
                       MAX New Site Thoughts
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                    <Plus className="w-4 h-4 text-gray-600" />
-                    <span className="text-sm" style={{ color: "#86837E" }}>
+                  <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
+                    <Plus className="w-4 h-4" style={palette.muted} />
+                    <span className="text-sm" style={palette.muted}>
                       Add new
                     </span>
                   </div>
@@ -253,21 +253,21 @@ export function Sidebar() {
           {/* Bottom Navigation Section */}
           <div className="mb-6">
             <div className="space-y-1">
-              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                <Settings className="w-4 h-4" style={{ color: "#86837E" }} />
-                <span className="text-sm" style={{ color: "#86837E" }}>
+              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
+                <Settings className="w-4 h-4" style={palette.muted} />
+                <span className="text-sm" style={palette.muted}>
                   Settings
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                <ShoppingBag className="w-4 h-4" style={{ color: "#86837E" }} />
-                <span className="text-sm" style={{ color: "#86837E" }}>
+              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
+                <ShoppingBag className="w-4 h-4" style={palette.muted} />
+                <span className="text-sm" style={palette.muted}>
                   Marketplace
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
-                <Trash2 className="w-4 h-4" style={{ color: "#86837E" }} />
-                <span className="text-sm" style={{ color: "#86837E" }}>
+              <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
+                <Trash2 className="w-4 h-4" style={palette.muted} />
+                <span className="text-sm" style={palette.muted}>
                   Trash
                 </span>
               </div>
@@ -281,8 +281,8 @@ export function Sidebar() {
             <motion.div
               className="absolute bottom-20 left-4 right-4 rounded-lg p-4 shadow-lg"
               style={{
-                backgroundColor: "#3d3d3d",
-                border: "1px solid #4d4d4d",
+                backgroundColor: "hsl(var(--card))",
+                border: "1px solid hsl(var(--border))",
               }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -291,20 +291,17 @@ export function Sidebar() {
             >
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3
-                    className="text-sm font-semibold"
-                    style={{ color: "#e5e5e5" }}
-                  >
+                  <h3 className="text-sm font-semibold" style={palette.text}>
                     Invite members
                   </h3>
-                  <p className="text-xs" style={{ color: "#86837E" }}>
+                  <p className="text-xs" style={palette.muted}>
                     Collaborate with your team.
                   </p>
                 </div>
                 <button
                   onClick={() => setIsInviteOpen(false)}
                   className="hover:opacity-80"
-                  style={{ color: "#86837E" }}
+                  style={palette.muted}
                 >
                   ×
                 </button>
@@ -315,16 +312,16 @@ export function Sidebar() {
 
         {/* Bottom User Section */}
         <div className="p-2">
-          <div className="flex items-center gap-3 px-3 py-1.5 rounded-md hover:bg-[#3d3d3d] hover:text-[#e5e5e5] cursor-pointer transition-colors">
+          <div className="flex items-center gap-3 px-3 py-1.5 rounded-md notion-tile cursor-pointer">
             <div className="flex-1">
-              <div className="text-sm font-medium" style={{ color: "#e5e5e5" }}>
+              <div className="text-sm font-medium" style={palette.text}>
                 Benjamin Uribe
               </div>
-              <div className="text-xs" style={{ color: "#86837E" }}>
+              <div className="text-xs" style={palette.muted}>
                 Free plan
               </div>
             </div>
-            <Send className="w-4 h-4" style={{ color: "#86837E" }} />
+            <Send className="w-4 h-4" style={palette.muted} />
           </div>
         </div>
       </div>

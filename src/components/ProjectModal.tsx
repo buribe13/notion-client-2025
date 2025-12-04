@@ -15,6 +15,23 @@ interface ProjectModalProps {
 
 export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
   const { addProject, updateProject } = useDashboardStore();
+  const palette = {
+    card: {
+      backgroundColor: "hsl(var(--card))",
+      border: "1px solid hsl(var(--border))",
+    },
+    muted: { color: "hsl(var(--muted-foreground))" },
+    text: { color: "hsl(var(--foreground))" },
+    input: {
+      backgroundColor: "hsl(var(--muted))",
+      borderColor: "hsl(var(--border))",
+      color: "hsl(var(--foreground))",
+    },
+    primary: {
+      backgroundColor: "hsl(var(--primary))",
+      color: "hsl(var(--primary-foreground))",
+    },
+  };
   const [formData, setFormData] = useState({
     name: "",
     clientType: "Individual" as ClientType,
@@ -92,7 +109,8 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
           transition={{ duration: 0.2 }}
         >
           <motion.div
-            className="bg-gray-800 rounded-lg w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto"
+            className="rounded-lg w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto"
+            style={palette.card}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -100,12 +118,13 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
           >
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-white">
+                <h2 className="text-xl font-semibold" style={palette.text}>
                   {project ? "Edit Project" : "Add New Project"}
                 </h2>
                 <button
                   onClick={onClose}
-                  className="text-gray-400 hover:text-white"
+                  className="hover:opacity-80"
+                  style={palette.muted}
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -114,7 +133,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Project Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2" style={palette.muted}>
                     Project Name
                   </label>
                   <input
@@ -123,14 +142,15 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                    style={palette.input}
                     required
                   />
                 </div>
 
                 {/* Client Type */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2" style={palette.muted}>
                     Client Type
                   </label>
                   <select
@@ -141,7 +161,8 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                         clientType: e.target.value as ClientType,
                       })
                     }
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                    style={palette.input}
                   >
                     <option value="Individual">Individual</option>
                     <option value="Startup">Startup</option>
@@ -156,7 +177,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                 {/* Status and Priority */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium mb-2" style={palette.muted}>
                       Status
                     </label>
                     <select
@@ -167,7 +188,8 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                           status: e.target.value as ProjectStatus,
                         })
                       }
-                      className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                      style={palette.input}
                     >
                       <option value="Not Started">Not Started</option>
                       <option value="In Progress">In Progress</option>
@@ -177,7 +199,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium mb-2" style={palette.muted}>
                       Priority
                     </label>
                     <select
@@ -188,7 +210,8 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                           priority: e.target.value as ProjectPriority,
                         })
                       }
-                      className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                      style={palette.input}
                     >
                       <option value="Low">Low</option>
                       <option value="Medium">Medium</option>
@@ -200,7 +223,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
 
                 {/* Deadline */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2" style={palette.muted}>
                     <Calendar className="w-4 h-4 inline mr-2" />
                     Deadline
                   </label>
@@ -210,7 +233,8 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     onChange={(e) =>
                       setFormData({ ...formData, deadline: e.target.value })
                     }
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                    style={palette.input}
                     required
                   />
                 </div>
@@ -218,7 +242,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                 {/* Budget and Hours */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium mb-2" style={palette.muted}>
                       <DollarSign className="w-4 h-4 inline mr-2" />
                       Budget
                     </label>
@@ -229,12 +253,13 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                       onChange={(e) =>
                         setFormData({ ...formData, budget: e.target.value })
                       }
-                      className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                      style={palette.input}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium mb-2" style={palette.muted}>
                       <Clock className="w-4 h-4 inline mr-2" />
                       Hours Spent
                     </label>
@@ -244,14 +269,15 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                       onChange={(e) =>
                         setFormData({ ...formData, hoursSpent: e.target.value })
                       }
-                      className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                      style={palette.input}
                     />
                   </div>
                 </div>
 
                 {/* Description */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium mb-2" style={palette.muted}>
                     Description
                   </label>
                   <textarea
@@ -260,7 +286,8 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                       setFormData({ ...formData, description: e.target.value })
                     }
                     rows={4}
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-blue-500"
+                    className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2"
+                    style={palette.input}
                     placeholder="Project description..."
                   />
                 </div>
@@ -270,13 +297,19 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-4 py-2 text-gray-300 hover:text-white border border-gray-600 rounded-md hover:bg-gray-700"
+                    className="px-4 py-2 rounded-md hover:opacity-80"
+                    style={{
+                      color: "hsl(var(--muted-foreground))",
+                      border: "1px solid hsl(var(--border))",
+                      backgroundColor: "hsl(var(--muted))",
+                    }}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                    className="px-4 py-2 rounded-md hover:opacity-90"
+                    style={palette.primary}
                   >
                     {project ? "Update Project" : "Add Project"}
                   </button>

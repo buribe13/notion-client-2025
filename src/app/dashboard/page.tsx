@@ -58,12 +58,16 @@ export default function Dashboard() {
     getUpcomingInvoices,
     invoices,
     setTheme,
+    dataSource,
+    setDataSource,
+    syncProjectsFromNotion,
   } = store;
   const theme = store.theme;
 
   const [activeTab, setActiveTab] = useState("Project Board");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<string | null>(null);
+  const [isSyncingNotion, setIsSyncingNotion] = useState(false);
 
   const projects = getFilteredProjects();
 
@@ -137,6 +141,13 @@ export default function Dashboard() {
   };
 
   const colors = getThemeColors();
+
+  const handleSyncFromNotion = async () => {
+    setIsSyncingNotion(true);
+    const source = await syncProjectsFromNotion();
+    setDataSource(source);
+    setIsSyncingNotion(false);
+  };
 
   // Helper function for tab button styles
   const getTabButtonStyle = (isActive: boolean) => ({
@@ -2680,6 +2691,34 @@ export default function Dashboard() {
         >
           {renderTabContent()}
         </motion.div>
+
+        {/* Data source toggle for live Notion demo */}
+        <div
+          className="fixed bottom-4 right-4 flex items-center gap-3 px-4 py-3 rounded-full shadow-lg border"
+          style={{
+            backgroundColor: "hsl(var(--card))",
+            borderColor: "hsl(var(--border))",
+          }}
+        >
+          <span
+            className="text-xs font-medium"
+            style={{ color: "hsl(var(--muted-foreground))" }}
+          >
+            Data: {dataSource === "notion" ? "Notion" : "Local mock"}
+          </span>
+          <button
+            onClick={handleSyncFromNotion}
+            disabled={isSyncingNotion}
+            className="px-3 py-1.5 rounded-full text-xs font-semibold transition-opacity"
+            style={{
+              backgroundColor: "hsl(var(--primary))",
+              color: "hsl(var(--primary-foreground))",
+              opacity: isSyncingNotion ? 0.7 : 1,
+            }}
+          >
+            {isSyncingNotion ? "Syncing..." : "Sync Notion"}
+          </button>
+        </div>
 
         {/* Modal */}
         <ProjectModal

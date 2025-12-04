@@ -42,6 +42,7 @@ export interface ProjectSort {
 export type ViewType = "table" | "board" | "calendar";
 export type ClientViewMode = "pro" | "client";
 export type Theme = "light" | "dark";
+export type DataSource = "local" | "notion";
 
 export interface ClientUpdate {
   id: string;
@@ -89,4 +90,5 @@ export interface DashboardState {
   clientUpdates: ClientUpdate[];
   invoices: Invoice[];
   theme: Theme;
+  dataSource: DataSource;
 }

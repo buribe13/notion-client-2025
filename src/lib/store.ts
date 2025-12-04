@@ -9,6 +9,7 @@ import {
   ClientUpdate,
   Invoice,
   Theme,
+  DataSource,
 } from "@/types";
 import { mockProjects } from "@/lib/data/projects";
 import { mockInvoices } from "@/lib/data/invoices";
@@ -30,6 +31,8 @@ interface DashboardStore extends DashboardState {
   markUpdateAsVisibleToClient: (updateId: string) => void;
   markClientUpdatesAsViewed: () => void;
   setTheme: (theme: Theme) => void;
+  setDataSource: (source: DataSource) => void;
+  syncProjectsFromNotion: () => Promise<DataSource>;
 
   // Computed
   getFilteredProjects: () => Project[];
@@ -51,6 +54,7 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
   isModalOpen: false,
   clientViewMode: "pro",
   theme: "dark",
+  dataSource: "local",
   clientUpdates: [
     {
       id: "1",
@@ -145,6 +149,22 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
     })),
 
   setTheme: (theme) => set({ theme }),
+
+  setDataSource: (dataSource) => set({ dataSource }),
+
+  syncProjectsFromNotion: async () => {
+    try {
+      const response = await fetch("/api/notion");
+      if (!response.ok) throw new Error("Failed to reach Notion API route");
+
+      const data = await response.json();
+      set({ projects: data.projects, dataSource: data.source as DataSource });
+      return (data.source as DataSource) ?? "local";
+    } catch (error) {
+      console.error("[dashboard] failed to sync from Notion", error);
+      return "local";
+    }
+  },
 
   // Computed
   getFilteredProjects: () => {

@@ -33,6 +33,16 @@ export function ProjectTable({ projects }: ProjectTableProps) {
     useDashboardStore();
   const [hoveredRow, setHoveredRow] = useState<string | null>(null);
 
+  const palette = {
+    text: { color: "hsl(var(--foreground))" },
+    muted: { color: "hsl(var(--muted-foreground))" },
+    primary: {
+      backgroundColor: "hsl(var(--primary))",
+      color: "hsl(var(--primary-foreground))",
+    },
+    card: { backgroundColor: "hsl(var(--secondary))" },
+  };
+
   const handleSort = (field: keyof Project) => {
     const newDirection =
       sort.field === field && sort.direction === "asc" ? "desc" : "asc";
@@ -66,8 +76,10 @@ export function ProjectTable({ projects }: ProjectTableProps) {
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-4">
-          <FileText className="w-6 h-6 text-white" />
-          <h1 className="text-2xl font-bold text-white">Freelance Projects</h1>
+          <FileText className="w-6 h-6" style={palette.text} />
+          <h1 className="text-2xl font-bold" style={palette.text}>
+            Freelance Projects
+          </h1>
         </div>
 
         {/* View Tabs */}
@@ -84,8 +96,8 @@ export function ProjectTable({ projects }: ProjectTableProps) {
               className={cn(
                 "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap",
                 tab.id === "table"
-                  ? "bg-gray-700 text-white border-b-2 border-blue-500"
-                  : "text-gray-400 hover:text-white hover:bg-gray-800"
+                  ? "bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] border-b-2"
+                  : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--accent))]"
               )}
             >
               <span>{tab.icon}</span>
@@ -97,20 +109,23 @@ export function ProjectTable({ projects }: ProjectTableProps) {
         {/* Table Controls */}
         <div className="flex items-center justify-between mb-4 gap-4">
           <div className="flex items-center gap-1 lg:gap-2">
-            <button className="p-2 hover:bg-gray-800 rounded-md">
-              <Filter className="w-4 h-4 text-gray-400" />
+            <button className="p-2 rounded-md hover:bg-[hsl(var(--accent))]">
+              <Filter className="w-4 h-4" style={palette.muted} />
             </button>
-            <button className="p-2 hover:bg-gray-800 rounded-md">
-              <ChevronUp className="w-4 h-4 text-gray-400" />
+            <button className="p-2 rounded-md hover:bg-[hsl(var(--accent))]">
+              <ChevronUp className="w-4 h-4" style={palette.muted} />
             </button>
-            <button className="p-2 hover:bg-gray-800 rounded-md">
-              <Search className="w-4 h-4 text-gray-400" />
+            <button className="p-2 rounded-md hover:bg-[hsl(var(--accent))]">
+              <Search className="w-4 h-4" style={palette.muted} />
             </button>
-            <button className="p-2 hover:bg-gray-800 rounded-md">
-              <MoreHorizontal className="w-4 h-4 text-gray-400" />
+            <button className="p-2 rounded-md hover:bg-[hsl(var(--accent))]">
+              <MoreHorizontal className="w-4 h-4" style={palette.muted} />
             </button>
           </div>
-          <button className="flex items-center gap-2 px-3 lg:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium">
+          <button
+            className="flex items-center gap-2 px-3 lg:px-4 py-2 rounded-md text-sm font-medium"
+            style={palette.primary}
+          >
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">New</span>
           </button>
@@ -121,10 +136,11 @@ export function ProjectTable({ projects }: ProjectTableProps) {
       <div className="notion-card rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[800px]">
-            <thead className="bg-gray-800">
+            <thead style={palette.card}>
               <tr>
                 <th
-                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300 cursor-pointer hover:text-white"
+                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium cursor-pointer transition-colors"
+                  style={palette.muted}
                   onClick={() => handleSort("name")}
                 >
                   <div className="flex items-center gap-1 lg:gap-2">
@@ -135,7 +151,8 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                   </div>
                 </th>
                 <th
-                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300 cursor-pointer hover:text-white"
+                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium cursor-pointer transition-colors"
+                  style={palette.muted}
                   onClick={() => handleSort("clientType")}
                 >
                   <div className="flex items-center gap-1 lg:gap-2">
@@ -146,7 +163,8 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                   </div>
                 </th>
                 <th
-                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300 cursor-pointer hover:text-white"
+                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium cursor-pointer transition-colors"
+                  style={palette.muted}
                   onClick={() => handleSort("status")}
                 >
                   <div className="flex items-center gap-1 lg:gap-2">
@@ -157,7 +175,8 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                   </div>
                 </th>
                 <th
-                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300 cursor-pointer hover:text-white"
+                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium cursor-pointer transition-colors"
+                  style={palette.muted}
                   onClick={() => handleSort("deadline")}
                 >
                   <div className="flex items-center gap-1 lg:gap-2">
@@ -168,7 +187,8 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                   </div>
                 </th>
                 <th
-                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300 cursor-pointer hover:text-white"
+                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium cursor-pointer transition-colors"
+                  style={palette.muted}
                   onClick={() => handleSort("priority")}
                 >
                   <div className="flex items-center gap-1 lg:gap-2">
@@ -179,7 +199,8 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                   </div>
                 </th>
                 <th
-                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300 cursor-pointer hover:text-white"
+                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium cursor-pointer transition-colors"
+                  style={palette.muted}
                   onClick={() => handleSort("budget")}
                 >
                   <div className="flex items-center gap-1 lg:gap-2">
@@ -190,7 +211,8 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                   </div>
                 </th>
                 <th
-                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300 cursor-pointer hover:text-white"
+                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium cursor-pointer transition-colors"
+                  style={palette.muted}
                   onClick={() => handleSort("hoursSpent")}
                 >
                   <div className="flex items-center gap-1 lg:gap-2">
@@ -200,7 +222,10 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                     <SortIcon field="hoursSpent" />
                   </div>
                 </th>
-                <th className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium text-gray-300">
+                <th
+                  className="text-left p-2 lg:p-4 text-xs lg:text-sm font-medium"
+                  style={palette.muted}
+                >
                   <span className="hidden sm:inline">Actions</span>
                   <span className="sm:hidden">...</span>
                 </th>
@@ -210,7 +235,8 @@ export function ProjectTable({ projects }: ProjectTableProps) {
               {projects.map((project, index) => (
                 <motion.tr
                   key={project.id}
-                  className="hover:bg-gray-800/50 transition-colors"
+                  className="transition-colors"
+                  style={{ backgroundColor: hoveredRow === project.id ? "hsl(var(--accent))" : "transparent" }}
                   onMouseEnter={() => setHoveredRow(project.id)}
                   onMouseLeave={() => setHoveredRow(null)}
                   initial={{ opacity: 0, y: 20 }}
@@ -218,7 +244,7 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                   transition={{ duration: 0.2, delay: index * 0.05 }}
                 >
                   <td className="p-2 lg:p-4">
-                    <div className="text-white font-medium text-sm lg:text-base">
+                    <div className="font-medium text-sm lg:text-base" style={palette.text}>
                       {project.name}
                     </div>
                   </td>
@@ -245,7 +271,7 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                       </span>
                     </div>
                   </td>
-                  <td className="p-2 lg:p-4 text-gray-300 text-xs lg:text-sm">
+                  <td className="p-2 lg:p-4 text-xs lg:text-sm" style={palette.muted}>
                     {formatDate(project.deadline)}
                   </td>
                   <td className="p-2 lg:p-4">
@@ -258,10 +284,10 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                       {project.priority}
                     </span>
                   </td>
-                  <td className="p-2 lg:p-4 text-gray-300 text-xs lg:text-sm">
+                  <td className="p-2 lg:p-4 text-xs lg:text-sm" style={palette.muted}>
                     {formatCurrency(project.budget)}
                   </td>
-                  <td className="p-2 lg:p-4 text-gray-300 text-xs lg:text-sm">
+                  <td className="p-2 lg:p-4 text-xs lg:text-sm" style={palette.muted}>
                     {project.hoursSpent}h
                   </td>
                   <td className="p-2 lg:p-4">
@@ -273,15 +299,15 @@ export function ProjectTable({ projects }: ProjectTableProps) {
                     >
                       <button
                         onClick={() => handleEdit(project)}
-                        className="p-1 hover:bg-gray-700 rounded text-gray-400 hover:text-white"
+                        className="p-1 rounded hover:bg-[hsl(var(--muted))]"
                       >
-                        <Edit className="w-3 h-3 lg:w-4 lg:h-4" />
+                        <Edit className="w-3 h-3 lg:w-4 lg:h-4" style={palette.muted} />
                       </button>
                       <button
                         onClick={() => handleDelete(project.id)}
-                        className="p-1 hover:bg-gray-700 rounded text-gray-400 hover:text-red-400"
+                        className="p-1 rounded hover:bg-[hsl(var(--muted))]"
                       >
-                        <Trash2 className="w-3 h-3 lg:w-4 lg:h-4" />
+                        <Trash2 className="w-3 h-3 lg:w-4 lg:h-4" style={palette.muted} />
                       </button>
                     </div>
                   </td>
@@ -293,7 +319,7 @@ export function ProjectTable({ projects }: ProjectTableProps) {
 
         {/* Add New Item Row */}
         <div className="p-2 lg:p-4">
-          <button className="flex items-center gap-2 text-gray-400 hover:text-white text-xs lg:text-sm">
+          <button className="flex items-center gap-2 text-xs lg:text-sm notion-tile rounded-md px-2 py-1">
             <Plus className="w-3 h-3 lg:w-4 lg:h-4" />
             <span className="hidden sm:inline">New item</span>
             <span className="sm:hidden">New</span>
